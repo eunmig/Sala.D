@@ -73,7 +73,7 @@ REST_AUTH = {
     'REGISTER_SERIALIZER': 'accounts.serializers.CustomRegisterSerializer',
 }
 
-
+ACCOUNT_ADAPTER = 'accounts.adapters.CustomAccountAdapter'
 
 SITE_ID = 1
 
