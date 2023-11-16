@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div class="login-status">
+      로그인 상태
+    </div>
     <nav>
       <RouterLink class="link" :to="{ name:'Home' }">Home</RouterLink> | 
       
