@@ -12,7 +12,7 @@ class CustomRegisterSerializer(RegisterSerializer):
 
     def get_adapter(self):
         return CustomAccountAdapter()
-    
+
     def get_cleaned_data(self):
         cleaned_data = super().get_cleaned_data()
         cleaned_data['salary'] = self.validated_data.get('salary', '')

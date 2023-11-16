@@ -1,14 +1,18 @@
 <template>
   <div>
+    <!-- 나중에 v-if 로  프로필 링크와 전환 -->
     <div class="login-status">
       로그인 상태
+      <RouterLink class="link" :to="{ name:'SignUp' }">회원가입</RouterLink> | 
+      <RouterLink class="link" :to="{ name:'LogIn' }">로그인</RouterLink> | 
     </div>
     <nav>
       <RouterLink class="link" :to="{ name:'Home' }">Home</RouterLink> | 
+
       
     </nav>
-    <h1>시작</h1>
   </div>
+  <RouterView/>
 </template>
 
 <script setup>
