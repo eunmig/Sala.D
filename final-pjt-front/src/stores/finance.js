@@ -20,7 +20,6 @@ export const useFinanceStore = defineStore('finance', () => {
             }
         }).then(res => {
             products.value = res.data
-            console.log(res.data)
         }).catch(err => console.log(err))
 
     }

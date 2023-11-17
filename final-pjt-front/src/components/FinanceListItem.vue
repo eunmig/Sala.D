@@ -27,6 +27,7 @@
 
 <script setup>
 import { RouterLink } from 'vue-router';
+console.log('여기까진 잘나옴')
 
 defineProps({ product: Object });
 </script>
