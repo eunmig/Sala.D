@@ -8,6 +8,7 @@
     </div>
     <nav>
       <RouterLink class="link" :to="{ name:'Home' }">Home</RouterLink> | 
+      <RouterLink class="link" :to="{ name:'Post' }">게시글</RouterLink> | 
 
       
     </nav>

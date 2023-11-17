@@ -58,6 +58,7 @@ export const useAuthStore = defineStore('auth', () => {
       }
     })
       .then((res) => {
+        console.log('ID는?',res.data)
         token.value = res.data.key
         userId.value = `${username}`
         window.alert('로그인 완료')
