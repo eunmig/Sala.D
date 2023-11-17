@@ -15,7 +15,7 @@ class DepositProducts(models.Model):
     join_way = models.TextField()               # 가입방법
     spcl_cnd = models.TextField()               # 우대조건
     dcls_strt_day = models.TextField()
-    dcls_end_day = models.TextField()
+    dcls_end_day = models.TextField(null=True)
 
 class DepositOptions(models.Model):
     product = models.ForeignKey(DepositProducts, on_delete=models.CASCADE)
