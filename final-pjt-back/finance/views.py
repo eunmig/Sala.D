@@ -1,11 +1,11 @@
-
-from django.shortcuts import get_object_or_404
+from django.shortcuts import render, get_object_or_404, get_list_or_404
 from django.http import JsonResponse
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, IsAdminUser
 from rest_framework.response import Response
 import requests
 from django.conf import settings
-from .serializers import ProductsSerializer, OptionsSerializer
+from .serializers import ProductsSerializer, OptionsSerializer, ProductsListSerializer
 from .models import DepositOptions, DepositProducts
 
 @api_view(['GET'])
@@ -41,8 +41,9 @@ def save_DP(request):
             'join_member': li.get('join_member'),
             'join_way': li.get('join_way'),
             'spcl_cnd': li.get('spcl_cnd'),
+            'dcls_strt_day': li.get('dcls_strt_day'),
+            "dcls_end_day": li.get('dcls_end_day'),
         }
-
         serializer = ProductsSerializer(data=save_data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
@@ -83,18 +84,18 @@ def save_DP(request):
 
 # 요청사항이 'GET'이라면, DepositProducts의 모든 정보를 요청하여 조회하기
 # 요청사항이 'POST'라면, DepositProducts가 정보가 생성되는지 확인
-@api_view(['GET', 'POST'])
+@api_view(['GET'])
 def deposit_products(request):
-    if request.method == 'GET':
-        finlifes = DepositProducts.objects.all()
-        serializer = ProductsSerializer(finlifes, many=True)
-        return Response(serializer.data)
-    
-    elif request.method == 'POST':
-        serializer = ProductsSerializer(data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
-            return Response(serializer.data)
+    finlifes = get_list_or_404(DepositProducts)
+    serializer = ProductsListSerializer(finlifes, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_deposit_item(request, fin_prdt_cd):
+    product = get_object_or_404(DepositProducts, fin_prdt_cd=fin_prdt_cd)
+    serializer = ProductsSerializer(product)
+    return Response(serializer.data)
 
 
 # 상품 리스트의 pk값과 options pk 값이 일치하면 pk의 옵션들 모두 출력 

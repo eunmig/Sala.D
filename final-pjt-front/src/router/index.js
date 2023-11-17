@@ -5,6 +5,8 @@ import LogInView from '@/views/LogInView.vue'
 import CreatePostView from '@/views/CreatePostView.vue'
 import PostListView from '@/views/PostListView.vue'
 import DetailView from '@/views/DetailView.vue'
+import FinanceListView from '@/views/FinanceListView.vue'
+import FinanceDetailView from '@/views/FinanceDetailView.vue'
 
 
 const router = createRouter({
@@ -40,6 +42,16 @@ const router = createRouter({
       name: 'CreatePost',
       component: CreatePostView
     },
+    {
+      path: '/financeList',
+      name: 'FinanceItems',
+      component: FinanceListView
+    },
+    {
+      path: '/financeItem/:id',
+      name: 'FinanceItemDetail',
+      component: FinanceDetailView
+    }
 
   ]
 })
