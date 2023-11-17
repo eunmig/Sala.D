@@ -61,8 +61,10 @@ const content = ref(null)
 // 댓글 수정용
 const showEditModal = ref(false)
 const editedContent = ref(null)
+const editCommentId = ref(null)
 
 const showEditForm = function(comment) {
+  editCommentId.value = comment.id
   editedContent.value = comment.content
   showEditModal.value = true
 }
@@ -71,14 +73,24 @@ const showEditForm = function(comment) {
 const editComment = function () {
   axios({
     method: 'put',
-    url: `${store.API_URL}/community/comments/${commentId}/`,
+    url: `${store.API_URL}/community/comments/${editCommentId.value}/`,
     data: {
       content: editedContent.value
     }
-  }).then((res)=> {
+  }).then((res) => {
+    console.log(editedContent.value)
+
+    const editedCommentIndex = post.value.comment_set.findIndex(comment => comment.id === editCommentId.value)
+
+    if (editedCommentIndex !== -1) {
+      post.value.comment_set.splice(editedCommentIndex, 1, res.data)
+    }
+
     editedContent.value = ''
-  })
+    showEditModal.value = false  // Close the modal after editing
+  }).catch(err => console.error('Error editing comment:', err))
 }
+
 
 const createComment = function () {
   axios({
@@ -109,8 +121,8 @@ const deleteComment = function (commentId) {
 }
 
 // 현재 유저
-const isCurrentUser = function (userId) {
-  return authStore.currentUser && authStore.currentUser.id === userId;
+const isCurrentUser = function (user) {
+  return authStore.currentUser && authStore.currentUser.id === user;
 }
 
 onMounted(() => {
@@ -130,14 +142,4 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: white;
-  padding: 20px;
-  z-index: 1000;
-  display: none; /* Hidden by default */
-}
 </style>
