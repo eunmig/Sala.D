@@ -10,6 +10,7 @@
       <RouterLink class="link" :to="{ name:'Home' }">Home</RouterLink> | 
       <RouterLink class="link" :to="{ name:'Post' }">게시글</RouterLink> | 
       <RouterLink class="link" :to="{ name:'FinanceItems' }">예적금 리스트</RouterLink> | 
+      <RouterLink class="link" :to="{ name:'Bank' }">은행 지도</RouterLink> | 
 
       
     </nav>
