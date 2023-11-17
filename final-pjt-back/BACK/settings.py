@@ -26,6 +26,8 @@ environ.Env.read_env(
     env_file=os.path.join(BASE_DIR, '.env')
 )
 
+FINANCE_API_KEY = env('FINANCE_API_KEY')
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
