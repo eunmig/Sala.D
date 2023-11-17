@@ -1,10 +1,13 @@
 <template>
-
+    <h1>{{ item.fin_prdt_nm }}</h1>
+    <p>{{ item.kor_co_nm }}</p>
+    <p v-html="formattedEtcNote"></p>
+    <OptionList :options="itemOption" />
 </template>
 
 <script setup>
 import axios from 'axios'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useFinanceStore } from '../stores/finance'
 import { useAuthStore } from '../stores/auth'
@@ -18,11 +21,12 @@ const financeStore = useFinanceStore()
 const route = useRoute()
 const itemOption = ref([])
 const item = ref(null)
-const id = route.params.id
 
-console.log(id)
-console.log('option',itemOption)
-console.log('item', item)
+
+const formattedEtcNote = computed(() => {
+  // Replace newline characters with <br> tags
+  return item.value?.etc_note ? item.value.etc_note.replace(/\n/g, '<br>') : ''
+})
 
 onMounted(() => {
   axios({
