@@ -25,3 +25,5 @@ git branch '(back/front)_기능' 으로 branch 생성
 
 2023/11/17
 ------------------
+npm install bootstrap bootstrap-vue-3
+npm install -D sass
