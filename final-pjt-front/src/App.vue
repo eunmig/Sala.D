@@ -39,7 +39,7 @@
         <h3 class="text-black">환전이 처음이라면</h3>
         <h1 class="fw-bold text-black">환율우대</h1>
         <h1 class="fw-bold text-black">최대 100% 혜택!</h1>
-        <a href="">바로가기</a>
+        <RouterLink :to="{ name: 'Exchange' }">바로가기</RouterLink>
       </div>
     </div>
 
