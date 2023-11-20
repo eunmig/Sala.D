@@ -25,50 +25,50 @@
   </template>
   
   <script setup>
-  import { ref, onMounted, watch } from 'vue';
-  import axios from 'axios';
-  import { useCommunityStore } from '@/stores/community';
-  import { useAuthStore } from '@/stores/auth';
+  import { ref, onMounted, watch } from 'vue'
+  import axios from 'axios'
+  import { useCommunityStore } from '@/stores/community'
+  import { useAuthStore } from '@/stores/auth'
   
-  const authStore = useAuthStore();
-  const store = useCommunityStore();
-  const token = authStore.token;
-  const currencies = ref([]);
-  const krwAmount = ref(1);
-  const targetCurrency = ref(null);
-  const otherAmount = ref(null);
-  const otherAmountId = ref('otherAmount');
-  const targetCurrencyLabel = ref(null);
+  const authStore = useAuthStore()
+  const store = useCommunityStore()
+  const token = authStore.token
+  const currencies = ref([])
+  const krwAmount = ref(1)
+  const targetCurrency = ref(null)
+  const otherAmount = ref(null)
+  const otherAmountId = ref('otherAmount')
+  const targetCurrencyLabel = ref(null)
   
   const updateOtherAmountLabel = () => {
-    const selectedCurrency = currencies.value.find((c) => c.id === targetCurrency.value);
+    const selectedCurrency = currencies.value.find((c) => c.id === targetCurrency.value)
     if (selectedCurrency) {
-      otherAmountId.value = `otherAmount${selectedCurrency.country}`;
-      targetCurrencyLabel.value = selectedCurrency.country;
+      otherAmountId.value = `otherAmount${selectedCurrency.country}`
+      targetCurrencyLabel.value = selectedCurrency.country
     }
-  };
+  }
   
   const resetValues = () => {
-    krwAmount.value = 1;
-    otherAmount.value = null;
+    krwAmount.value = 1
+    otherAmount.value = null
   };
   
   const convertCurrency = (baseCurrency) => {
     if (targetCurrency.value) {
-      const toCurrency = currencies.value.find((c) => c.id === targetCurrency.value);
+      const toCurrency = currencies.value.find((c) => c.id === targetCurrency.value)
       if (toCurrency) {
-        const toRate = toCurrency.rate;
+        const toRate = toCurrency.rate
   
         if (baseCurrency === 'KRW') {
-          otherAmount.value = (parseFloat(krwAmount.value) * toRate).toFixed(2);
+          otherAmount.value = (parseFloat(krwAmount.value) * toRate).toFixed(2)
         } else {
-          krwAmount.value = (parseFloat(otherAmount.value) / toRate).toFixed(2);
+          krwAmount.value = (parseFloat(otherAmount.value) / toRate).toFixed(2)
         }
       } else {
-        console.error(`Currency not found for targetCurrency: ${targetCurrency.value}`);
+        console.error(`Currency not found for targetCurrency: ${targetCurrency.value}`)
       }
     }
-  };
+  }
   
   onMounted(() => {
     axios({
@@ -80,24 +80,24 @@
     })
       .then((res) => {
         currencies.value = res.data;
-        targetCurrency.value = res.data.find((currency) => currency.country === 'KRW').id;
-        convertCurrency(); // Initial conversion
-        updateOtherAmountLabel(); // Initial label update
+        targetCurrency.value = res.data.find((currency) => currency.country === 'KRW').id
+        convertCurrency()
+        updateOtherAmountLabel()
       })
       .catch((error) => {
-        console.error('Error fetching currencies:', error);
-      });
-  });
+        console.error('Error fetching currencies:', error)
+      })
+  })
   
   watch(() => targetCurrency.value, () => {
-    resetValues();
-    updateOtherAmountLabel();
-    convertCurrency(); // Call the conversion after resetting values
-  });
+    resetValues()
+    updateOtherAmountLabel()
+    convertCurrency()
+  })
   </script>
   
   
   <style scoped>
-  /* Add your styles here */
+
   </style>
   
