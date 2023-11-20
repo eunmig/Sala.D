@@ -7,6 +7,18 @@ export const useAuthStore = defineStore('auth', () => {
 
   const API_URL = 'http://127.0.0.1:8000'
 
+  const getRates = function () {
+    axios({
+      method: 'get',
+      url: `${API_URL}/exchange/save/`,
+    })
+    .then((res) => {
+      console.log('환율 정보 저장')
+    })
+    .catch(err => console.log(err))
+
+  }
+``
   // 회원가입 로직
   const signUp = function (payload) {
     const { username, password1, password2, email, salary } = payload
@@ -61,6 +73,7 @@ export const useAuthStore = defineStore('auth', () => {
         console.log('ID는?',res.data)
         token.value = res.data.key
         userId.value = `${username}`
+        getRates()
         window.alert('로그인 완료')
         router.push({ name: 'Home' })
       })
@@ -90,6 +103,7 @@ export const useAuthStore = defineStore('auth', () => {
     signUp,
     logIn,
     logOut,
+    getRates,
     token,
     isAuthenticated,
     userId
