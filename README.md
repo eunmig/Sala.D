@@ -10,6 +10,15 @@ git branch '(back/front)_기능' 으로 branch 생성
 
 -> master 브랜치와 같은 상태에 놓임.
 
+- 새로운 branch 에서 push 
+
+1. git push --set-upstream origin '새로운 branch 이름'
+2. git switch master
+3. git merge '새로운 branch 이름'
+4. git push
+
+-> master 브랜치와 같은 상태에 놓임.
+
 - commit -m '한글로 작성, 말머리 [수정/추가...] 등 적절하게 사용 이후, 간략하게 설명'
 
 2023/11/16
