@@ -58,7 +58,8 @@
       </div>
     </div>
 
-    <div class="carousel-item">
+    <!-- 3번째 이미지만 출력되지않아 디버깅 필요 -->
+    <!-- <div class="carousel-item">
       <div class="carousel-item active">
         <img src="@/assets/main3.jpg" class="d-block w-100" alt="main3">
       </div>
@@ -66,13 +67,15 @@
         <img src="@/assets/map.jpg" alt="map">
       </div>
       <div class="carousel-caption">
-        <h3 class="text-black">내 주변 은행</h3>
-        <h1 class="fw-bold text-black">미리 검색하고</h1>
-        <h1 class="fw-bold text-black">찾아가자</h1>
-        <a href="">바로가기</a>
+        <h3 class="text-black">두둥</h3>
+        <h1 class="fw-bold text-black">주변 은행을</h1>
+        <h1 class="fw-bold text-black">찾아라</h1>
+        <RouterLink :to="{ name: 'Bank' }">바로가기</RouterLink>
       </div>
+    </div> -->
 
-    </div>
+
+  </div>
 
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -83,7 +86,7 @@
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Next</span>
   </button>
-</div>
+
 
 
   <div class="main-content">
