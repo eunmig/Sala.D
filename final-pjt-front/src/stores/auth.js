@@ -67,12 +67,29 @@ export const useAuthStore = defineStore('auth', () => {
       .catch(err => console.log(err))
   }
 
+
+  const logOut = function () {
+    axios({
+      method: 'post',
+      url: `${API_URL}/accounts/logout/`,
+    })
+      .then((res) => {
+        token.value = null
+        userId.value = 'default'
+        router.push({ name: 'ArticleView' })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
   
 
   return { 
     API_URL, 
     signUp,
     logIn,
+    logOut,
     token,
     isAuthenticated,
     userId

@@ -1,10 +1,16 @@
 <template>
   <div id="main-page">
-        <div class="login-status">
+    <div v-if="authStore.isAuthenticated">
+      <form @submit.prevent="authStore.logOut">
+        <input type="submit" value="로그아웃">
+      </form>
+      </div>
+      <div v-else class="login-status">
       로그인 상태
       <RouterLink class="link" :to="{ name:'SignUp' }">회원가입</RouterLink> | 
       <RouterLink class="link" :to="{ name:'LogIn' }">로그인</RouterLink> | 
-    </div>
+     </div>
+
     
     <div class="image-container">
       <nav>
@@ -23,6 +29,10 @@
 <script setup>
 import 'bootstrap/dist/css/bootstrap.css'
 import { RouterLink, RouterView } from 'vue-router'
+import { useAuthStore } from './stores/auth'
+
+const authStore = useAuthStore()
+
 </script>
 
 <style scoped>

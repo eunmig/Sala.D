@@ -5,7 +5,7 @@ from rest_framework.response import Response
 import requests
 from django.conf import settings
 from .serializers import ExchangeSerializer
-from .models import exchange
+from .models import Exchange
 # Create your views here.
 
 
@@ -44,7 +44,7 @@ def saveExchangeRate(request):
         currency_name = currency_names.get(country, f'Unknow currency ({country})')
         # Assuming you have a model named Exchange with fields country and rate
         # Create or update the Exchange entry for each country
-        exchange.objects.update_or_create(
+        Exchange.objects.update_or_create(
             country=country,
             defaults={'rate': rate, 'currency_name':currency_name}
         )
