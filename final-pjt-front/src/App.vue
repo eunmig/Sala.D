@@ -1,10 +1,10 @@
 <template>
   <div id="main-page">
-    <div v-if="authStore.isAuthenticated">
+    <div v-if="authStore.isAuthenticated" class="logout-container">
       <form @submit.prevent="authStore.logOut">
-        <input type="submit" value="로그아웃">
+        <input type="submit" value="로그아웃" class="logout-button">
       </form>
-      </div>
+    </div>
     <div v-else class="login-status">
       로그인 상태
       <RouterLink class="link" :to="{ name:'SignUp' }">회원가입</RouterLink> | 
@@ -113,11 +113,5 @@ body {
   height: 530px;
   margin: 0 auto;
 }
-
-.carousel-item img {
-    width: 100vw;
-    height: 100vh;
-    object-fit: cover;
-  }
 
 </style>
