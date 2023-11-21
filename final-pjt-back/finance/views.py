@@ -22,6 +22,67 @@ def index(request):
     return Response(bank_list)
 
 
+# @api_view(['GET'])
+# def save_DP(request):
+#     api_key = settings.FINANCE_API_KEY
+
+#     url = f'http://finlife.fss.or.kr/finlifeapi/depositProductsSearch.json?auth={api_key}&topFinGrpNo=020000&pageNo=1'
+
+#     bank_list = requests.get(url).json()
+
+#     # bank_list에서 models에 필요한 데이터 가져오기
+#     for li in bank_list.get('result').get('baseList'):
+#         save_data = {
+#             'fin_prdt_cd': li.get('fin_prdt_cd'),
+#             'kor_co_nm': li.get('kor_co_nm'),
+#             'fin_prdt_nm': li.get('fin_prdt_nm'),
+#             'etc_note': li.get('etc_note'),
+#             'join_deny': li.get('join_deny'),
+#             'join_member': li.get('join_member'),
+#             'join_way': li.get('join_way'),
+#             'spcl_cnd': li.get('spcl_cnd'),
+#             'dcls_strt_day': li.get('dcls_strt_day'),
+#             "dcls_end_day": li.get('dcls_end_day'),
+#         }
+#         serializer = ProductsSerializer(data=save_data)
+#         if serializer.is_valid(raise_exception=True):
+#             serializer.save()
+
+
+#     for li in bank_list.get('result').get('optionList'):
+
+#         # 변수에 fin_prdt_cd 저장하기
+#         fin_prdt_cd = li.get('fin_prdt_cd')
+        
+#         # product 변수에 optionList와 DepositProducts에서 fin_prdt_cd가 일치하면, product 아이템하나를 저장
+#         product = get_object_or_404(DepositProducts, fin_prdt_cd=fin_prdt_cd)
+
+#         intr_rate = li.get('intr_rate')
+#         if intr_rate is None:
+#             intr_rate = -1
+
+#         intr_rate2 = li.get('intr_rate2')
+#         if intr_rate2 is None:
+#             intr_rate2 = -1
+
+#         # product의 pk를 '할당' 하기.
+#         save_data = {
+#             'product': product.pk,
+#             'fin_prdt_cd': li.get('fin_prdt_cd'),
+#             'intr_rate_type_nm': li.get('intr_rate_type_nm'),
+#             'intr_rate': intr_rate, 
+#             'intr_rate2': intr_rate2, 
+#             'save_trm': li.get('save_trm'),
+#         }
+
+#         serializer = OptionsSerializer(data=save_data)
+#         if serializer.is_valid(raise_exception=True):
+#             serializer.save()
+
+#     return JsonResponse({'message': 'Data saved successfully'})
+
+
+# update_or_create 로직으로 다시 만든 데이터 저장 함수
 @api_view(['GET'])
 def save_DP(request):
     api_key = settings.FINANCE_API_KEY
@@ -30,7 +91,6 @@ def save_DP(request):
 
     bank_list = requests.get(url).json()
 
-    # bank_list에서 models에 필요한 데이터 가져오기
     for li in bank_list.get('result').get('baseList'):
         save_data = {
             'fin_prdt_cd': li.get('fin_prdt_cd'),
@@ -42,19 +102,18 @@ def save_DP(request):
             'join_way': li.get('join_way'),
             'spcl_cnd': li.get('spcl_cnd'),
             'dcls_strt_day': li.get('dcls_strt_day'),
-            "dcls_end_day": li.get('dcls_end_day'),
+            'dcls_end_day': li.get('dcls_end_day'),
         }
-        serializer = ProductsSerializer(data=save_data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
 
+        product, created = DepositProducts.objects.update_or_create(
+            fin_prdt_cd=save_data['fin_prdt_cd'],
+            defaults=save_data
+        )
 
     for li in bank_list.get('result').get('optionList'):
-
-        # 변수에 fin_prdt_cd 저장하기
         fin_prdt_cd = li.get('fin_prdt_cd')
-        
-        # product 변수에 optionList와 DepositProducts에서 fin_prdt_cd가 일치하면, product 아이템하나를 저장
+        save_trm = li.get('save_trm')
+
         product = get_object_or_404(DepositProducts, fin_prdt_cd=fin_prdt_cd)
 
         intr_rate = li.get('intr_rate')
@@ -65,21 +124,30 @@ def save_DP(request):
         if intr_rate2 is None:
             intr_rate2 = -1
 
-        # product의 pk를 '할당' 하기.
         save_data = {
-            'product': product.pk,
-            'fin_prdt_cd': li.get('fin_prdt_cd'),
+            'product': product,
+            'fin_prdt_cd': fin_prdt_cd,
             'intr_rate_type_nm': li.get('intr_rate_type_nm'),
-            'intr_rate': intr_rate, 
-            'intr_rate2': intr_rate2, 
-            'save_trm': li.get('save_trm'),
+            'intr_rate': intr_rate,
+            'intr_rate2': intr_rate2,
+            'save_trm': save_trm,
         }
 
-        serializer = OptionsSerializer(data=save_data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
+        # Filter existing options based on fin_prdt_cd and save_trm
+        existing_options = DepositOptions.objects.filter(
+            fin_prdt_cd=fin_prdt_cd,
+            save_trm=save_trm
+        )
+
+        if existing_options.exists():
+            # If options exist, update the first one (you might want to add more logic here)
+            existing_options.update(**save_data)
+        else:
+            # If no options exist, create a new one
+            DepositOptions.objects.create(**save_data)
 
     return JsonResponse({'message': 'Data saved successfully'})
+
 
 
 # 요청사항이 'GET'이라면, DepositProducts의 모든 정보를 요청하여 조회하기
