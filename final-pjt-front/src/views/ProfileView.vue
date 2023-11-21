@@ -14,14 +14,6 @@ import { useAuthStore } from '../stores/auth'
 import { ref } from 'vue'
 const authStore = useAuthStore()
 const userData = authStore.userData
-
-let showPasswordChangePopup = ref(false)
-
-const open_PopUp = function() {
-  showPasswordChangePopup = !showPasswordChangePopup
-  console.log('팝업')
-}
-console.log(userData.id)
   </script>
   
   <style scoped>

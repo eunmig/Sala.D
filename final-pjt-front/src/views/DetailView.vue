@@ -10,6 +10,9 @@
       <p>{{ post.updated_at }}</p>
       <hr>
       <p>{{ post.content }}</p>
+      <div v-if="post.user === userData.id">
+      <button @click="deletePost">삭제</button>
+      </div>
       <hr>
       <div v-if="post.comment_set.length > 0">
         <h2>댓글</h2>
@@ -46,7 +49,7 @@
 <script setup>
 import axios from 'axios'
 import { onMounted, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, } from 'vue-router'
 import { useCommunityStore } from '../stores/community'
 import { useAuthStore } from '../stores/auth'
 import router from '../router'
@@ -57,7 +60,10 @@ const store = useCommunityStore()
 const route = useRoute()
 const post = ref(null)
 const content = ref(null)
+const userData = authStore.userData
+const post_pk = route.params.id
 
+console.log('dtaa', userData.id)
 // 댓글 수정용
 const showEditModal = ref(false)
 const editedContent = ref(null)
@@ -108,22 +114,28 @@ const createComment = function () {
   }).catch(err => console.log(err))
 }
 
-const deleteComment = function (commentId) {
-  axios({
-    method: 'delete',
-    url: `${store.API_URL}/community/comments/${commentId}/`
-  })
-  .then(() => {
-    post.value.comment_set = post.value.comment_set.filter(comment => comment.id !== commentId);
-    console.log(`Comment ${commentId} deleted successfully`)
-  })
-  .catch(err => console.error('Error deleting comment:', err))
+// const deletePost = () => {
+//   axios({
+//     method: 'delete',
+//     url: `${authStore.API_URL}/community/post_UD/${post_pk}`,
+//   })
+//   .then((res) => {
+//     console.log('포스트 삭제 완료')
+//     router.push({ name:'Post' })
+//   })
+//   .catch(err => {
+//     console.error('포스트 삭제 실패', err)
+//   })
+// }
+
+const deletePost = () => {
+    console.log('포스트 삭제 완료')
+    router.push({ name:'Post' })
 }
 
-// 현재 유저
-const isCurrentUser = function (user) {
-  return authStore.currentUser && authStore.currentUser.id === user;
-}
+
+
+
 
 onMounted(() => {
   axios({
