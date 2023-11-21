@@ -21,7 +21,7 @@ const financeStore = useFinanceStore()
 const route = useRoute()
 const itemOption = ref([])
 const item = ref(null)
-
+console.log(item)
 
 const formattedEtcNote = computed(() => {
   // Replace newline characters with <br> tags

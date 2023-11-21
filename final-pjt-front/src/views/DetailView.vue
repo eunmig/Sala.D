@@ -16,7 +16,7 @@
       
       </div>
       <hr>
-      <div v-if="post.comment_set.length > 0">
+      <div>
         <h2>댓글</h2>
         <form @submit.prevent="createComment">
           <label for="comment">댓글</label>
@@ -27,13 +27,12 @@
           <li v-for="comment in post.comment_set" :key="comment.id">
             {{ comment.id }}번 댓글: {{ comment.content }}
             {{ comment.user }}
+            <div>
             <button @click="deleteComment(comment.id)">삭제</button>
             <button @click="showEditForm(comment)">수정</button>
+            </div>
           </li>
         </ul>
-      </div>
-      <div v-else>
-        <p>No comments yet.</p>
       </div>
       <hr>
     </div>
@@ -117,27 +116,22 @@ const createComment = function () {
   }).catch(err => console.log(err))
 }
 
-// const deletePost = () => {
-//   axios({
-//     method: 'delete',
-//     url: `${authStore.API_URL}/community/post_UD/${post_pk}`,
-//   })
-//   .then((res) => {
-//     console.log('포스트 삭제 완료')
-//     router.push({ name:'Post' })
-//   })
-//   .catch(err => {
-//     console.error('포스트 삭제 실패', err)
-//   })
-// }
+const deleteComment = function (commentId) {
+  axios({
+    method: 'delete',
+    url: `${store.API_URL}/community/comments/${commentId}/`
+  })
+  .then(() => {
+    post.value.comment_set = post.value.comment_set.filter(comment => comment.id !== commentId);
+    console.log(`Comment ${commentId} deleted successfully`)
+  })
+  .catch(err => console.error('Error deleting comment:', err))
+}
 
 const deletePost = () => {
     console.log('포스트 삭제 완료')
     router.push({ name:'Post' })
 }
-
-
-
 
 
 onMounted(() => {
@@ -157,4 +151,14 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  z-index: 1000;
+  display: none; /* Hidden by default */
+}
 </style>
