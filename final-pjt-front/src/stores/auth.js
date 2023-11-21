@@ -7,6 +7,8 @@ export const useAuthStore = defineStore('auth', () => {
 
   const API_URL = 'http://127.0.0.1:8000'
 
+  
+  // 로그인 시 환율 정보 저장을 위함
   const getRates = function () {
     axios({
       method: 'get',
@@ -18,6 +20,21 @@ export const useAuthStore = defineStore('auth', () => {
     .catch(err => console.log(err))
 
   }
+
+
+  // 로그인 시 금융상품 저장하기
+
+  const getProducts = function() {
+    axios({
+      method: 'get',
+      url: `${API_URL}/finance/save_deposit_products/`
+    })
+    .then((res) => {
+      console.log('금융 상품 정보 저장')
+    })
+    .catch(err => console.log(err))
+  }
+
 
   // 회원가입 로직
   const signUp = function (payload) {
@@ -72,7 +89,8 @@ export const useAuthStore = defineStore('auth', () => {
       .then((res) => {
         token.value = res.data.key
         userId.value = `${username}`
-        // getRates()
+        getRates()
+        getProducts()
         getUserData({ username })
         window.alert('로그인 완료')
         router.push({ name: 'Home' })
@@ -120,6 +138,7 @@ export const useAuthStore = defineStore('auth', () => {
     logOut,
     getRates,
     getUserData,
+    getProducts,
     token,
     isAuthenticated,
     userId,

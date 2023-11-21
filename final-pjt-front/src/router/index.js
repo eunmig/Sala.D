@@ -13,9 +13,6 @@ import ProfileView from '@/views/ProfileView.vue'
 import EditPostView from '@/views/EditPostView.vue'
 
 
-const isAuthenticated = true
-
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -33,12 +30,6 @@ const router = createRouter({
       path: '/login',
       name: 'LogIn',
       component: LogInView,
-      beforeEnter: (to, from) => {
-        if (isAuthenticated && to.name == 'LogIn') {
-          console.log('이미 로그인되어 있습니다.')
-          return { name: 'home' }
-        }
-      }
     },
     {
       path: '/posts',
@@ -87,12 +78,35 @@ const router = createRouter({
     },
   ]
 })
-router.beforeEach((to, from) => {
-  const isAuthenticated = false
-  
-  if (!isAuthenticated && to.name !== 'LogIn') {
+router.beforeEach((to, from, next) => {
+  // Check authentication status dynamically (replace this with your actual authentication logic)
+  const isAuthenticated = checkAuthentication()
+
+  // Routes that do not require authentication
+  const publicRoutes = ['LogIn', 'SignUp']
+
+  if (!isAuthenticated && !publicRoutes.includes(to.name)) {
     console.log('로그인이 필요합니다.')
-    return { name: 'LogIn' }
+    window.alert('로그인이 필요합니다')
+    next({ name: 'LogIn' })
+  } else if (isAuthenticated && to.name === 'LogIn') {
+    console.log('이미 로그인되어 있습니다.')
+    next({ name: 'Home' })
+  } else {
+    next()
   }
 })
+
+
+function checkAuthentication() {
+  // Check if the 'auth' key exists in localStorage
+  const authData = localStorage.getItem('auth');
+
+  // Parse the JSON data, and check if 'token' property exists
+  const isAuthenticated = authData ? JSON.parse(authData).token : null;
+
+  // Return true if the 'token' property exists, indicating the user is authenticated
+  return !!isAuthenticated
+}
+
 export default router
