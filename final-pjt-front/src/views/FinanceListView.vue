@@ -18,6 +18,7 @@ const store = useFinanceStore()
 
 onMounted(()=> {
     store.getProducts()
+    console.log('onMount: FinancialListView.vue')
 })
 </script>
 

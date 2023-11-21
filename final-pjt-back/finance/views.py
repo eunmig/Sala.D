@@ -30,6 +30,7 @@ def save_DP(request):
 
     bank_list = requests.get(url).json()
 
+    # bank_list에서 models에 필요한 데이터 가져오기
     for li in bank_list.get('result').get('baseList'):
         save_data = {
             'fin_prdt_cd': li.get('fin_prdt_cd'),
@@ -41,34 +42,42 @@ def save_DP(request):
             'join_way': li.get('join_way'),
             'spcl_cnd': li.get('spcl_cnd'),
             'dcls_strt_day': li.get('dcls_strt_day'),
-            'dcls_end_day': li.get('dcls_end_day'),
+            "dcls_end_day": li.get('dcls_end_day'),
         }
+        serializer = ProductsSerializer(data=save_data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
 
-        product, created = DepositProducts.objects.update_or_create(
-            fin_prdt_cd=save_data['fin_prdt_cd'],
-            defaults=save_data
-        )
 
     for li in bank_list.get('result').get('optionList'):
+
+        # 변수에 fin_prdt_cd 저장하기
         fin_prdt_cd = li.get('fin_prdt_cd')
+        
+        # product 변수에 optionList와 DepositProducts에서 fin_prdt_cd가 일치하면, product 아이템하나를 저장
         product = get_object_or_404(DepositProducts, fin_prdt_cd=fin_prdt_cd)
 
-        intr_rate = li.get('intr_rate', -1)
-        intr_rate2 = li.get('intr_rate2', -1)
+        intr_rate = li.get('intr_rate')
+        if intr_rate is None:
+            intr_rate = -1
 
+        intr_rate2 = li.get('intr_rate2')
+        if intr_rate2 is None:
+            intr_rate2 = -1
+
+        # product의 pk를 '할당' 하기.
         save_data = {
-            'product': product,
+            'product': product.pk,
             'fin_prdt_cd': li.get('fin_prdt_cd'),
             'intr_rate_type_nm': li.get('intr_rate_type_nm'),
-            'intr_rate': intr_rate,
-            'intr_rate2': intr_rate2,
+            'intr_rate': intr_rate, 
+            'intr_rate2': intr_rate2, 
             'save_trm': li.get('save_trm'),
         }
 
-        option, created = DepositOptions.objects.update_or_create(
-            fin_prdt_cd=save_data['fin_prdt_cd'],
-            defaults=save_data
-        )
+        serializer = OptionsSerializer(data=save_data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
 
     return JsonResponse({'message': 'Data saved successfully'})
 

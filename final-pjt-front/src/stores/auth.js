@@ -27,7 +27,7 @@ export const useAuthStore = defineStore('auth', () => {
   const getProducts = function() {
     axios({
       method: 'get',
-      url: `${API_URL}/finance/save_deposit_products/`
+      url: `${API_URL}/finance/save-deposit-products/`
     })
     .then((res) => {
       console.log('금융 상품 정보 저장')

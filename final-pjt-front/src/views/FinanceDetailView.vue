@@ -10,7 +10,7 @@
 
 <script setup>
 import axios from 'axios';
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useFinanceStore } from '../stores/finance';
 import { useAuthStore } from '../stores/auth';
@@ -35,33 +35,28 @@ const fetchData = async () => {
       headers: {
         Authorization: `Token ${token}`
       }
-    });
-    itemOption.value = optionsResponse.data;
-    console.log('상품 옵션 res', optionsResponse.data);
+    })
+    itemOption.value = optionsResponse.data
+    console.log('상품 옵션 res', optionsResponse.data)
 
     const productResponse = await axios.get(`${financeStore.API_URL}/finance/deposit-product/${route.params.id}/`, {
       headers: {
         Authorization: `Token ${token}`
       }
-    });
+    })
     item.value = productResponse.data;
-    console.log('금융상품 res', productResponse.data);
+    console.log('금융상품 res', productResponse.data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
-};
+}
 
-const beforeEach = async (to, from, next) => {
-  // Check if the route has the necessary parameter (assuming id is required)
-  if (to.params.id) {
-    // Fetch data before navigating to the route
-    await fetchData();
-  }
-  next();
-};
+onMounted(() => {
+  fetchData()
+  console.log('onMount: FinanceDetailView')
+})
 
-// Expose the function to the component options
-{ beforeEach }
+
 </script>
 
 
