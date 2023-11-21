@@ -27,6 +27,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useAuthStore } from '../stores/auth'
+console.log('로그인창')
 
 const store = useAuthStore()
 

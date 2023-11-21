@@ -43,6 +43,8 @@
 import { ref } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 
+console.log('회원가입창')
+
 const store = useAuthStore()
 
 const username = ref(null)
