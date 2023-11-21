@@ -1,7 +1,5 @@
 from django.db import models
-
-# Create your models here.
-from django.db import models
+from django.conf import settings
 
 # Create your models here.
 
@@ -16,6 +14,10 @@ class DepositProducts(models.Model):
     spcl_cnd = models.TextField()               # 우대조건
     dcls_strt_day = models.TextField()
     dcls_end_day = models.TextField(null=True)
+
+    # 가입 상품을 위한 테이블 col 추가
+    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_products')
+
 
 class DepositOptions(models.Model):
     product = models.ForeignKey(DepositProducts, on_delete=models.CASCADE)

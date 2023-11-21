@@ -8,4 +8,5 @@ urlpatterns = [
     path('deposit-product/<str:fin_prdt_cd>/', views.get_deposit_item),
     path('deposit-product-options/<str:fin_prdt_cd>/', views.deposit_PO),
     path('deposit-products/top_rate/', views.top_rate),
+    path('likes/<str:fin_prdt_cd>/', views.likes),
 ]

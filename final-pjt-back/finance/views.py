@@ -201,3 +201,16 @@ def top_rate(request):
     }
 
     return JsonResponse(response_data)
+
+@api_view(['POST'])
+def likes(request, product_cd):
+    product = get_object_or_404(DepositProducts, fin_prdt_cd=product_cd)
+
+    if request.user in product.like_users.all():
+        product.like_users.remove(request.user)
+        liked = False
+    else:
+        product.like_users.add(request.user)
+        liked = True
+
+    return JsonResponse({'liked': liked})
