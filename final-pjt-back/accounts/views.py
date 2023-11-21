@@ -34,21 +34,15 @@ def get_user_datas(request):
     serializer = UserDataSerializer(user_data, many=True)
     return Response(serializer.data)
 
-@api_view(['PATCH'])
-def update_profile(request, *args, **kwargs):
-    # Get the user profile instance based on user ID or any other identifier
-    user_profile = User.objects.get(user=request.user)
+@api_view(['PUT'])
+def update_profile(request, user_pk):
+    user_data = get_object_or_404(User, pk=user_pk)
 
-    # Get the data from the request
-    data = request.data
+    # You need to pass the instance and request data to the serializer
+    serializer = UserDataSerializer(user_data, data=request.data, partial=True)
 
-    # Update the serializer instance with the data from the request
-    serializer = UserDataSerializer(user_profile, data=data, partial=True)
-
-    # Validate and save the updated data
     if serializer.is_valid():
         serializer.save()
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.data)
     else:
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+        return Response(serializer.errors, status=400)

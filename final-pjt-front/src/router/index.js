@@ -13,6 +13,9 @@ import ProfileView from '@/views/ProfileView.vue'
 import EditPostView from '@/views/EditPostView.vue'
 
 
+const isAuthenticated = true
+
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -29,7 +32,13 @@ const router = createRouter({
     {
       path: '/login',
       name: 'LogIn',
-      component: LogInView
+      component: LogInView,
+      beforeEnter: (to, from) => {
+        if (isAuthenticated && to.name == 'LogIn') {
+          console.log('이미 로그인되어 있습니다.')
+          return { name: 'home' }
+        }
+      }
     },
     {
       path: '/posts',
@@ -78,5 +87,12 @@ const router = createRouter({
     },
   ]
 })
-
+router.beforeEach((to, from) => {
+  const isAuthenticated = false
+  
+  if (!isAuthenticated && to.name !== 'LogIn') {
+    console.log('로그인이 필요합니다.')
+    return { name: 'LogIn' }
+  }
+})
 export default router

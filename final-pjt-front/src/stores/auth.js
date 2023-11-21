@@ -105,32 +105,11 @@ export const useAuthStore = defineStore('auth', () => {
       .then((res) => {
         token.value = null
         userId.value = 'default'
-        router.push({ name: 'ArticleView' })
+        router.push({ name: 'Home' })
       })
       .catch((err) => {
         console.log(err)
       })
-  }
-
-
-  const changePW = function (payload) {
-    console.log(token)
-    const { new_password1, new_password2 } = payload
-    axios({
-      method: 'post',
-      url: `${API_URL}/accounts/password/change/`,
-      headers: {
-        Authorization: `Token ${token}`
-      },
-      data: {
-        new_password1,
-        new_password2
-      }
-    })
-    .then((res) => {
-      console.log('changePW')
-    })
-    .catch(err => console.log('비밀번호 변경 에러', err))
   }
 
 
@@ -141,7 +120,6 @@ export const useAuthStore = defineStore('auth', () => {
     logOut,
     getRates,
     getUserData,
-    changePW,
     token,
     isAuthenticated,
     userId,
