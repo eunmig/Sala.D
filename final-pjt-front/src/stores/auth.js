@@ -18,7 +18,7 @@ export const useAuthStore = defineStore('auth', () => {
     .catch(err => console.log(err))
 
   }
-``
+
   // 회원가입 로직
   const signUp = function (payload) {
     const { username, password1, password2, email, salary } = payload
@@ -56,7 +56,7 @@ export const useAuthStore = defineStore('auth', () => {
   })
   
   const userId = ref('default')
-
+  
 // 로그인 로직
   const logIn = function (payload) {
     const { username, password } = payload
@@ -70,16 +70,32 @@ export const useAuthStore = defineStore('auth', () => {
       }
     })
       .then((res) => {
-        console.log('ID는?',res.data)
         token.value = res.data.key
         userId.value = `${username}`
-        getRates()
+        // getRates()
+        getUserData({ username })
         window.alert('로그인 완료')
         router.push({ name: 'Home' })
       })
       .catch(err => console.log(err))
   }
 
+
+  const userData = ref([])
+
+  const getUserData = function(payload) {
+    const { username } = payload
+    axios({
+      method: 'get',
+      url: `${API_URL}/account/get_data/${username}/`
+    })
+    .then((res) => {
+      userData.value = res.data
+      console.log('유저 정보',userData.value)
+    })
+    .catch(err => console.log(err))
+    
+  }
 
   const logOut = function () {
     axios({
@@ -96,17 +112,17 @@ export const useAuthStore = defineStore('auth', () => {
       })
   }
 
-  
-
   return { 
     API_URL, 
     signUp,
     logIn,
     logOut,
     getRates,
+    getUserData,
     token,
     isAuthenticated,
-    userId
+    userId,
+    userData
   }
 
 }, { persist: true})
