@@ -18,6 +18,7 @@
             </td>
             <td>{{ product.dcls_strt_day }}</td>
             <td v-for="option in product.depositoptions_set">{{ option.intr_rate }} / {{ option.save_trm }}</td>
+            <p>은미야 해줘</p>
           </tr>
         </tbody>
       </table>
