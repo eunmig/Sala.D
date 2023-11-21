@@ -12,6 +12,8 @@
       <p>{{ post.content }}</p>
       <div v-if="post.user === userData.id">
       <button @click="deletePost">삭제</button>
+      <RouterLink :to="{ name: 'EditPost', params: { post_pk: post_pk } }">수정</RouterLink> 
+      
       </div>
       <hr>
       <div v-if="post.comment_set.length > 0">
@@ -53,6 +55,7 @@ import { useRoute, } from 'vue-router'
 import { useCommunityStore } from '../stores/community'
 import { useAuthStore } from '../stores/auth'
 import router from '../router'
+import { RouterLink } from 'vue-router'
 
 const authStore = useAuthStore()
 const token = authStore.token
