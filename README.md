@@ -50,3 +50,20 @@ npm install -D sass
 - 문의사항 :
 
 1. auth.js 내에 로그인 시 환율정보를 받아오는 함수를 작성했을 때, 정상동작하지만 콘솔창에 'is not a function'이 뜸.
+
+2023/11/21
+------------------
+할 일
+- 은미 :
+1. app.vue main3.png 디버깅
+2. finance_detail, kakaomap css
+
+- 휘원 :
+1. 예적금 금리비교
+
+추가 구현
+1. 자동차 데이터 DB
+2. 프로필(+추천알고리즘), 환율, 게시글 css + 보안
+3. figma 정리
+4. 발표 ppt
+5. readme 작성
