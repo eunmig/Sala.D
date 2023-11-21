@@ -1,8 +1,5 @@
 <template>
     <div>
-      <h3>예적금 목록</h3>
-      <hr>
-  
       <table>
         <colgroup>
           <col style="width: 300px;"> <!-- Adjust the width as needed -->
