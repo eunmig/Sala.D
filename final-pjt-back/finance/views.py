@@ -145,6 +145,7 @@ def save_DP(request):
         else:
             # If no options exist, create a new one
             DepositOptions.objects.create(**save_data)
+    DepositOptions.objects.filter(intr_rate = -1).delete()
 
     return JsonResponse({'message': 'Data saved successfully'})
 
