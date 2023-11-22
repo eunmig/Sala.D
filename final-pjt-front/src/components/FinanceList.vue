@@ -1,12 +1,14 @@
 <template>
   <div>
-    <label for="bankSelect">은행: </label>
-    <select id="bankSelect" v-model="selectedBank">
-      <option value="">-- 선택 안함 --</option>
-      <option v-for="bank in uniqueBanks" :key="bank" :value="bank">
-        {{ bank }}
-      </option>
-    </select>
+    <div class="bankSelect">
+      <label for="bankSelect">은행: </label>
+      <select id="bankSelect" v-model="selectedBank" class="pl">
+        <option value="">-- 선택 안함 --</option>
+        <option v-for="bank in uniqueBanks" :key="bank" :value="bank">
+          {{ bank }}
+        </option>
+      </select>
+    </div>
     
   <table>
     <colgroup>
@@ -21,7 +23,6 @@
         <th>상품명</th>
         <th>공시 일자</th>
         <th>저축금리 / 저축 기간</th>
-        <!-- Add more headers if needed -->
       </tr>
     </thead>
 
@@ -63,6 +64,7 @@ const filteredProducts = computed(() => {
 </script>
 
 <style>
+@import "@/components/FinanceList.scss"
 
 </style>
   

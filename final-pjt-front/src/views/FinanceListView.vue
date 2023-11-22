@@ -6,6 +6,7 @@
         <br>
     </div>
     <FinanceList/>
+    <br>
 </template>
 
 <script setup>
