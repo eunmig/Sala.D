@@ -1,8 +1,13 @@
 <template>
-  <h1 class="title">{{ item?.fin_prdt_nm }}</h1>
-  <br>
-  <h4 class="subtitle">{{ item?.kor_co_nm }}</h4>
-  <br>
+  <div class="two alt-two">
+    <h1>{{ item?.fin_prdt_nm }}
+        <span>{{ item?.kor_co_nm }}</span>
+    </h1>
+    <br>
+  </div>
+  <button class="btn btn-primary disabled" @click="toggleLike">
+    {{ isLiked ? '관심 상품 해제' : '관심 상품 등록' }}
+  </button>
   <div>
     <table>
       <thead>
@@ -27,7 +32,6 @@
         </tr>
       </tbody>
     </table>
-    <button @click="toggleLike">{{ isLiked ? '관심 상품 해제' : '관심 상품 등록' }}</button>
     <br>
   </div>
 </template>
