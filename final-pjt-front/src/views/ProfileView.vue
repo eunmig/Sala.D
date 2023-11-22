@@ -40,7 +40,7 @@
 
     </div>
   </div>
-
+  <BarChart :likedProducts="liked_products" />
 </template>
 
 <script setup>
@@ -48,7 +48,7 @@ import axios from 'axios';
 import PasswordChangePopup from '../components/PasswordChangePopup.vue'
 import { useAuthStore } from '../stores/auth'
 import { onMounted, ref } from 'vue'
-import Chart from 'chart.js/auto'
+import BarChart from '@/components/BarChart.vue'
 
 const authStore = useAuthStore()
 const userData = authStore.userData
@@ -95,6 +95,7 @@ onMounted(() => {
   get_likes()
   console.log('onMount: ProfileView', liked_products)
 })
+
 </script>
 
 <style scoped>

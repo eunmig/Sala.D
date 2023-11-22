@@ -5,7 +5,7 @@
     </h1>
     <br>
   </div>
-  <button class="btn btn-primary disabled" @click="toggleLike">
+  <button class="btn btn-primary" @click="toggleLike">
     {{ isLiked ? '관심 상품 해제' : '관심 상품 등록' }}
   </button>
   <div>
@@ -103,6 +103,7 @@ const toggleLike = async () => {
     console.error('Error toggling like:', error)
   }
 }
+
 
 onMounted(() => {
   fetchData();
