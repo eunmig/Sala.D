@@ -6,7 +6,7 @@
     <br>
   </div>
   <button class="btn btn-primary disabled" @click="toggleLike">
-    {{ isLiked ? 'Unlike' : 'Like' }}
+    {{ isLiked ? '관심 상품 해제' : '관심 상품 등록' }}
   </button>
   <div>
     <table>
@@ -32,7 +32,6 @@
         </tr>
       </tbody>
     </table>
-    <button @click="toggleLike">{{ isLiked ? '관심 상품 해제' : '관심 상품 등록' }}</button>
     <br>
   </div>
 </template>
