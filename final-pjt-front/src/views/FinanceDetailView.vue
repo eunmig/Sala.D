@@ -113,5 +113,5 @@ onMounted(() => {
 
 <style scoped>
 @import "@/views/FinanceDetailView.scss"
-/* Add your component-specific styles here if needed */
+
 </style>

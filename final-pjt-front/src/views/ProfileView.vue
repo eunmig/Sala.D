@@ -48,7 +48,6 @@ import axios from 'axios';
 import PasswordChangePopup from '../components/PasswordChangePopup.vue'
 import { useAuthStore } from '../stores/auth'
 import { onMounted, ref } from 'vue'
-import BarChart from '@/components/BarChart.vue'
 
 const authStore = useAuthStore()
 const userData = authStore.userData

@@ -67,3 +67,15 @@ npm install -D sass
 3. figma 정리
 4. 발표 ppt
 5. readme 작성
+
+2023/11/21
+------------------
+할 일
+- 은미 :
+1. createPostView 50%
+2. detailView, profile css
+3. home content 추가 작성
+
+- 휘원 : 
+1. 그래프 작성
+2. 추천 알고리즘
