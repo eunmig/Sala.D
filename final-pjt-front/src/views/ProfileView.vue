@@ -48,7 +48,6 @@ import axios from 'axios';
 import PasswordChangePopup from '../components/PasswordChangePopup.vue'
 import { useAuthStore } from '../stores/auth'
 import { onMounted, ref } from 'vue'
-import Chart from 'chart.js/auto'
 
 const authStore = useAuthStore()
 const userData = authStore.userData
