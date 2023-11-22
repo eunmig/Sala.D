@@ -64,13 +64,36 @@ onMounted(() => {
 
 </style> -->
 <template>
-  <button @click="fetchData">새로고침</button>
+  <h1 class="title">{{ item?.fin_prdt_nm }}</h1>
+  <br>
+  <h4 class="subtitle">{{ item?.kor_co_nm }}</h4>
+  <br>
   <div>
-    <h1>{{ item?.fin_prdt_nm }}</h1>
-    <p>{{ item?.kor_co_nm }}</p>
-    <p v-html="formattedEtcNote"></p>
-    <OptionList :options="itemOption" />
+    <table>
+      <thead>
+        <tr>
+          <th>상품명</th>
+          <th>은행명</th>
+          <th>상품 설명</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ item?.fin_prdt_nm }}</td>
+          <td>{{ item?.kor_co_nm }}</td>
+          <td v-html="formattedEtcNote"></td>
+        </tr>
+        <br>
+        <tr>
+          <td colspan="3">
+            <!-- 추가된 행에 OptionList 컴포넌트 추가 -->
+            <OptionList :options="itemOption" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
     <button @click="toggleLike">{{ isLiked ? 'Unlike' : 'Like' }}</button>
+    <br>
   </div>
 </template>
 
@@ -145,5 +168,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
+@import "@/views/FinanceDetailView.scss"
 /* Add your component-specific styles here if needed */
 </style>
