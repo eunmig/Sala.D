@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h3>username: {{ userData.username }}</h3>
+  <!-- <div> -->
+    <!-- <h3>username: {{ userData.username }}</h3>
     <div>
       <p>이름: 
         <input v-model="userData.last_name" placeholder="성" />
@@ -8,10 +8,38 @@
       </p>
       <p>이메일: <input v-model="userData.email" placeholder="abc@efg.com" /></p>
       <p>연봉: <input v-model="userData.salary" placeholder="-" /></p>
-      <button @click="submitChanges">회원 정보만 수정</button>
-      <hr>
-      <h2>내가 가입한 상품 목록</h2>
+      <button @click="submitChanges">회원 정보만 수정</button> -->
+  
+  <div class="two alt-two">
+    <h1>My Profile Page
+        <span>   </span>
+    </h1>
+    <br>
+  </div>
 
+  <div class="profile-container">
+    <hr>
+    <h3>ID : {{ userData.username }}</h3>
+    <div class="profile-form">
+      <div class="form-field">
+        <label for="last_name">이름: </label>
+        <input v-model="userData.last_name" placeholder="성" id="last_name" class="input" />
+        <input v-model="userData.first_name" placeholder="이름" class="input" />
+      </div>
+
+      <div class="form-field">
+        <label for="email">E-mail: </label>
+        <input v-model="userData.email" placeholder="abc@efg.com" id="email" class="input" />
+      </div>
+
+      <div class="form-field">
+        <label for="salary">연봉: </label>
+        <input v-model="userData.salary" placeholder="-" id="salary" class="input" />
+      </div>    
+      <hr>
+      <br>
+
+      <h2>내가 가입한 상품 목록</h2>
       <div>
         <button @click="toggleChart">그래프 열기</button>
         <div v-if="showChart">
@@ -161,5 +189,6 @@ const updateChartData = () => {
 
 
 <style scoped>
-/* Add your styles if needed */
+@import "@/views/ProfileView.scss";
+
 </style>
