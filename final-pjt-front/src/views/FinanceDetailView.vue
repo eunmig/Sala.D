@@ -81,7 +81,7 @@ const toggleLike = async () => {
   try {
     const likeResponse = await axios.post(
       `${financeStore.API_URL}/finance/likes/${item.value.fin_prdt_cd}/`,
-      { product_cd: item.value.fin_prdt_cd }, // Include fin_prdt_cd in the request body
+      null,
       {
         headers: {
           Authorization: `Token ${token}`
@@ -91,8 +91,12 @@ const toggleLike = async () => {
     
     // Update isLiked based on the server response
     isLiked.value = likeResponse.data.liked;
+
+    // Show alert based on the like status
+    const message = isLiked.value ? '관심 목록에 추가 되었습니다.' : '관심 목록에서 해제 되었습니다.'
+    window.alert(message);
   } catch (error) {
-    console.error('Error toggling like:', error);
+    console.error('Error toggling like:', error)
   }
 }
 

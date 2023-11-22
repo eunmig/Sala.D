@@ -6,7 +6,7 @@ from rest_framework.response import Response
 import requests
 from django.conf import settings
 from .serializers import ProductsSerializer, OptionsSerializer, ProductsListSerializer
-from .models import DepositOptions, DepositProducts
+from .models import DepositOptions, DepositProducts, LikeProducts
 
 @api_view(['GET'])
 def index(request):
@@ -20,66 +20,6 @@ def index(request):
 
     # result = bank_list['result'].keys()
     return Response(bank_list)
-
-
-# @api_view(['GET'])
-# def save_DP(request):
-#     api_key = settings.FINANCE_API_KEY
-
-#     url = f'http://finlife.fss.or.kr/finlifeapi/depositProductsSearch.json?auth={api_key}&topFinGrpNo=020000&pageNo=1'
-
-#     bank_list = requests.get(url).json()
-
-#     # bank_list에서 models에 필요한 데이터 가져오기
-#     for li in bank_list.get('result').get('baseList'):
-#         save_data = {
-#             'fin_prdt_cd': li.get('fin_prdt_cd'),
-#             'kor_co_nm': li.get('kor_co_nm'),
-#             'fin_prdt_nm': li.get('fin_prdt_nm'),
-#             'etc_note': li.get('etc_note'),
-#             'join_deny': li.get('join_deny'),
-#             'join_member': li.get('join_member'),
-#             'join_way': li.get('join_way'),
-#             'spcl_cnd': li.get('spcl_cnd'),
-#             'dcls_strt_day': li.get('dcls_strt_day'),
-#             "dcls_end_day": li.get('dcls_end_day'),
-#         }
-#         serializer = ProductsSerializer(data=save_data)
-#         if serializer.is_valid(raise_exception=True):
-#             serializer.save()
-
-
-#     for li in bank_list.get('result').get('optionList'):
-
-#         # 변수에 fin_prdt_cd 저장하기
-#         fin_prdt_cd = li.get('fin_prdt_cd')
-        
-#         # product 변수에 optionList와 DepositProducts에서 fin_prdt_cd가 일치하면, product 아이템하나를 저장
-#         product = get_object_or_404(DepositProducts, fin_prdt_cd=fin_prdt_cd)
-
-#         intr_rate = li.get('intr_rate')
-#         if intr_rate is None:
-#             intr_rate = -1
-
-#         intr_rate2 = li.get('intr_rate2')
-#         if intr_rate2 is None:
-#             intr_rate2 = -1
-
-#         # product의 pk를 '할당' 하기.
-#         save_data = {
-#             'product': product.pk,
-#             'fin_prdt_cd': li.get('fin_prdt_cd'),
-#             'intr_rate_type_nm': li.get('intr_rate_type_nm'),
-#             'intr_rate': intr_rate, 
-#             'intr_rate2': intr_rate2, 
-#             'save_trm': li.get('save_trm'),
-#         }
-
-#         serializer = OptionsSerializer(data=save_data)
-#         if serializer.is_valid(raise_exception=True):
-#             serializer.save()
-
-#     return JsonResponse({'message': 'Data saved successfully'})
 
 
 # update_or_create 로직으로 다시 만든 데이터 저장 함수
@@ -215,3 +155,15 @@ def likes(request, product_cd):
         liked = True
 
     return JsonResponse({'liked': liked})
+
+
+@api_view(['GET'])
+def liked_products(request):
+    liked_products = LikeProducts.objects.filter(user_id=request.user).values('product_id')
+    product_ids = [item['product_id'] for item in liked_products]
+    
+    # Fetch the liked products using the retrieved product ids
+    liked_products_data = DepositProducts.objects.filter(fin_prdt_cd__in=product_ids)
+    
+    serializer = ProductsSerializer(liked_products_data, many=True)
+    return Response(serializer.data)
