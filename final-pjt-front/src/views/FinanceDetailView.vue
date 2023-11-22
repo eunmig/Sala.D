@@ -32,7 +32,7 @@
         </tr>
       </tbody>
     </table>
-    <!-- <button @click="toggleLike">{{ isLiked ? 'Unlike' : 'Like' }}</button> -->
+    <button @click="toggleLike">{{ isLiked ? '관심 상품 해제' : '관심 상품 등록' }}</button>
     <br>
   </div>
 </template>
