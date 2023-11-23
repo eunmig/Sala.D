@@ -60,6 +60,7 @@
   const list_city = ref([])
   const select_area = ref([])
   const select_sido = ref(null)
+  const KAKAOMAP_API_KEY = process.env.VUE_APP_KAKAOMAP_API_KEY
   
   const area = ref({
           "서울특별시": [ "강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구", "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구", "성동구", "성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구", "중구", "중랑구" ],
@@ -97,7 +98,7 @@
     const script = document.createElement('script')
     const subscr =document.createElement('script')      
     // 동적 로딩을 위해서 autoload=false 추가
-    script.src = `https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=6ea6f2ddaa643d87dd39ce1bf304f859&libraries=services,clusterer,drawing`
+    script.src = `https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${process.env.VUE_APP_KAKAO_API_KEY}&libraries=services,clusterer,drawing`
     // kakaomap script loading 후 initMap 실행
     script.addEventListener('load', () => kakao.maps.load(initMap))
     document.head.appendChild(script)
