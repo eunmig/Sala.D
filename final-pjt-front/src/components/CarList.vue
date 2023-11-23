@@ -1,20 +1,19 @@
-
 <template>
-<div>
-<table>
-    <colgroup>
-    <col style="width: 250px;"> <!-- Adjust the width as needed -->
-    <col style="width: 400px;"> <!-- Adjust the width as needed -->
-    <col style="width: 150px;"> <!-- Adjust the width as needed -->
-    </colgroup>
-    <thead>
-    <tr>
-        <th>차량 종류</th>
-        <th>금액대</th>
-        <th>출시 연도</th>
-    </tr>
-    </thead>
-</table>
+    <div>
+    <table>
+        <colgroup>
+        <col style="width: 250px;"> <!-- Adjust the width as needed -->
+        <col style="width: 400px;"> <!-- Adjust the width as needed -->
+        <col style="width: 150px;"> <!-- Adjust the width as needed -->
+        </colgroup>
+        <thead>
+        <tr>
+            <th>차량 종류</th>
+            <th>금액대</th>
+            <th>출시 연도</th>
+        </tr>
+        </thead>
+    </table>
 
     <div v-if="showCar">
     <button @click="toggleCar">추천 차량</button>
@@ -33,7 +32,8 @@
         :car="car"
         />
     </div>
-</div>
+
+    </div>
 </template>
 
 <script setup>
@@ -70,5 +70,18 @@ const recMyCar = function () {
 </script>
 
 <style scoped>
-
+button {
+    height: 36px;
+    margin-top: 10px;
+    margin-left: 20px;
+    padding: 0 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease-in-out;
+    margin-left: 0%;
+}
 </style>

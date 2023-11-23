@@ -39,8 +39,10 @@
       <hr>
       <br>
       <h2>추천 차량 목록</h2>
-
-      <hr>
+      <RouterLink class="button" :to="{ name : 'Car' }" >
+      추천 차량 보러가기
+      </RouterLink> 
+      <br>
       <h2>내가 가입한 상품 목록</h2>
       <div>
         <button @click="toggleChart">그래프 열기</button>
@@ -79,12 +81,14 @@
 
 <script setup>
 import axios from 'axios';
+import RecommandCarView from './RecommandCarView.vue';
 import PasswordChangePopup from '../components/PasswordChangePopup.vue'
 import { useAuthStore } from '../stores/auth'
 import { onMounted, ref, watch, computed } from 'vue'
 import { Bar } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
+
 
 const authStore = useAuthStore()
 const userData = authStore.userData

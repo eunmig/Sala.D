@@ -12,20 +12,46 @@
     <table>
       <thead>
         <tr>
-          <th>상품명</th>
-          <th>은행명</th>
-          <th>상품 설명</th>
+          <th colspan="2">상품명</th>
+          <th colspan="2">은행명</th>
+        </tr>
+      </thead>
+        <tr>
+          <td colspan="2">{{ item?.fin_prdt_nm }}</td>
+          <td colspan="2">{{ item?.kor_co_nm }}</td>
+        </tr>
+
+        <br>
+
+      <thead>
+        <tr>
+          <th>상품설명</th>
+          <th>우대대상</th>
+          <th>가입방법</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>{{ item?.fin_prdt_nm }}</td>
-          <td>{{ item?.kor_co_nm }}</td>
           <td v-html="formattedEtcNote"></td>
+          <td>{{ item?.join_member }}</td>
+          <td>{{ item?.join_way }}</td>
         </tr>
+
         <br>
+
+      <thead>
         <tr>
-          <td colspan="3">
+          <th>우대조건</th>
+        </tr>
+      </thead>
+      <tr>
+        <td v-html="formattedspclcnd" colspan="4"></td>
+      </tr>
+
+        <br>
+        
+        <tr>
+          <td colspan="4">
             <!-- 추가된 행에 OptionList 컴포넌트 추가 -->
             <OptionList :options="itemOption" />
           </td>
@@ -55,6 +81,11 @@ const isLiked = ref(false);
 const formattedEtcNote = computed(() => {
   return item.value?.etc_note ? item.value.etc_note.replace(/\n/g, '<br>') : '';
 });
+
+const formattedspclcnd = computed(() => {
+  return item.value?.spcl_cnd ? item.value.spcl_cnd.replace(/\n/g, '<br>') : '';
+});
+
 
 const fetchData = async () => {
   try {
