@@ -37,7 +37,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, markRaw } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import CarRecommand from '../components/CarRecommand.vue'
 import axios from 'axios';
@@ -66,7 +66,9 @@ const recMyCar = function () {
     .catch(err => console.log(err))
 }
 
-
+onMounted(() => {
+    authStore.getCar()
+})
 </script>
 
 <style scoped>

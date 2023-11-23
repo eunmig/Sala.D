@@ -19,7 +19,7 @@ urlpatterns = [
     path('saving-product/<str:fin_prdt_cd>/', views.get_saving_item),
     path('saving-products/top_rate/', views.top_rate_S),
     path('saving-like/<str:product_cd>/', views.likes_s),
-    path('liked-saving/', views.liked_D_products),
+    path('liked-saving/', views.liked_S_products),
     path('saving-product-options/<str:fin_prdt_cd>/', views.deposit_SO),
 
 ]

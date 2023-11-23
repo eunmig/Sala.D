@@ -32,6 +32,7 @@
       <br>
       <h2>내가 가입한 상품 목록</h2>
       <div>
+        <h3>예금</h3>
         <button @click="toggleChart">그래프 열기</button>
         <div v-if="showChart">
           <Bar :data="chartData" :options="chartOptions"/>
@@ -60,6 +61,38 @@
 
         <hr>
         </div>
+
+        <div>
+          <h3>적금</h3>
+          <button @click="toggleChart2">그래프 열기</button>
+          <div v-if="showChart2">
+            <Bar :data="chartData2" :options="chartOptions2"/>
+          </div>
+        </div>
+        <div v-for="product in likedSavings" :key="product.fin_prdt_cd">
+          <p>은행명: {{ product.kor_co_nm }}</p>
+          <p>상품명: {{ product.fin_prdt_nm }}</p>
+  
+          <table>
+            <thead>
+              <tr>
+                <th>기간</th>
+                <th>저축금리</th>
+                <th>최고우대금리</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="option in product.savingoptions_set" :key="option.id">
+                <td>{{ option.save_trm }}개월</td>
+                <td>{{ option.intr_rate }}</td>
+                <td>{{ option.intr_rate2 }}</td>
+              </tr>
+            </tbody>
+          </table>
+  
+          <hr>
+          </div>
+  
       <hr>
       <PasswordChangePopup />
     </div>
@@ -103,7 +136,6 @@ const submitChanges = async () => {
 
 // 좋아요 예금 상품 가져오기
 const likedProducts = ref([])
-
 const get_likes_D = function () {
   axios({
     method: 'get',
@@ -112,7 +144,9 @@ const get_likes_D = function () {
       Authorization: `Token ${authStore.token}`
     }
   }).then((res) => {
+    get_likes_S()
     likedProducts.value = res.data
+    console.log('D 완료')
   })
   .catch(err => console.log(err))
 }
@@ -129,16 +163,18 @@ const get_likes_S = function () {
     }
   }).then((res) => {
     likedSavings.value = res.data
+    console.log(likedSavings)
   })
   .catch(err => console.log(err))
 }
 
 onMounted(() => {
   get_likes_D()
-  get_likes_S()
   console.log('onMount: ProfileView', likedProducts)
 })
 
+
+// 차트 관련 코드
 const showChart = ref(false)
 const chartOptions = ref({})
 const chartData = ref({})
@@ -194,6 +230,61 @@ const updateChartData = () => {
   }
 }
 
+//차트2
+const showChart2 = ref(false)
+const chartOptions2 = ref({})
+const chartData2 = ref({})
+
+const toggleChart2 = () => {
+  showChart2.value = !showChart2.value
+  console.log(showChart2.value)
+  console.log('DATA', chartData2)
+  console.log('options', chartOptions2)
+}
+
+// Watch for changes in showChart and fetch data when it becomes true
+watch(showChart2, (newVal) => {
+  if (newVal) {
+    updateChartData2()
+  }
+})
+
+
+const updateChartData2 = () => {
+  chartData2.value.active = true;
+
+  chartData2.value.labels = ' '
+
+  chartData2.value.datasets = likedSavings.value.flatMap((product, productIndex) =>
+    product.savingoptions_set.flatMap((option, optionIndex) => {
+      const randomColor = `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 0.5)`;
+
+      const intrRateDataset = {
+        label: `저축 ${product.fin_prdt_nm} ${option.save_trm}개월`,
+        backgroundColor: randomColor,
+        data: [option.intr_rate],
+      };
+
+      const intrRate2Dataset = {
+        label: `최대 우대 ${product.fin_prdt_nm} ${option.save_trm}개월`,
+        backgroundColor: randomColor,
+        data: [option.intr_rate2]
+      };
+
+      return [intrRateDataset, intrRate2Dataset]
+    })
+  )
+
+  chartOptions.value = {
+    responsive: true,
+    elements: {
+      bar: {
+        borderWidth: 1,
+        borderColor: 'black',
+      },
+    },
+  }
+}
 </script>
 
 
