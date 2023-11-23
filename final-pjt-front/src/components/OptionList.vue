@@ -25,7 +25,7 @@
   </script>
   
   <style>
-  @import "@/components/KakaoMap.scss"
+  @import "@/components/OptionList.scss"
 
   </style>
   

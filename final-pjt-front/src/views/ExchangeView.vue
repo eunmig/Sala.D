@@ -100,4 +100,3 @@
 @import "@/views/ExchangeView.scss"
 
 </style>
-  

@@ -15,6 +15,7 @@ import ProfileView from '@/views/ProfileView.vue'
 import EditPostView from '@/views/EditPostView.vue'
 import RecommandCarView from '@/views/RecommandCarView.vue'
 import CarDetailView from '@/views/CarDetailView.vue'
+import PasswordChangePopup from '@/components/PasswordChangePopup.vue'
 import test from '@/views/test.vue'
 
 const router = createRouter({
@@ -105,6 +106,11 @@ const router = createRouter({
       name: 'test',
       component: test
     },
+    {
+      path: '/password-change-popup',
+      name: 'password-change',
+      component: PasswordChangePopup
+    }
   ]
 })
 router.beforeEach((to, from, next) => {

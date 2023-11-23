@@ -19,7 +19,6 @@
         <RouterLink class="link" :to="{ name:'Bank' }">은행 지도</RouterLink> | 
         <RouterLink class="link" :to="{ name:'Exchange' }">환율</RouterLink> | 
         <RouterLink class="link" :to="{ name:'Profile' }">프로필</RouterLink> | 
-
       </nav>
     </div>
   </div>
