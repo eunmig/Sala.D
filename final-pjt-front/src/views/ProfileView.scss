@@ -117,12 +117,29 @@ body, html {
   .alt-two h1:before {
     left:50%; margin-left:-30px;
   }
+    
+  h2, h3 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+    color: #353131;
+
+  }
   
   h2 {
+    font-size: 24px;
+    margin-bottom: 16px;
     text-align: center;
   }
   
-
+  h3 {
+    font-size: 20px;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  
   .button {
     display: block;
     margin: 0 auto;

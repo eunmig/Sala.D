@@ -30,7 +30,7 @@
       <RouterLink class="button" :to="{ name : 'Car' }" >
       추천 차량 보러가기
       </RouterLink> 
-      <br>
+      <hr>
       <h2>내가 가입한 상품 목록</h2>
       <div>
         <h3>예금</h3>

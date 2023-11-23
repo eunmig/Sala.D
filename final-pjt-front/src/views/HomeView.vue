@@ -23,13 +23,13 @@
       <div class="carousel-item">
         <img src="@/assets/main2.jpg" class="d-block w-100" alt="main2">
         <div class="carousel-caption-img">
-          <img src="@/assets/이벤트.png" alt="이벤트">
+          <img src="@/assets/car.png" alt="car">
         </div>
         <div class="carousel-caption">
-          <h3 class="text-black">OPEN</h3>
+          <h3 class="text-black">BUY</h3>
           <h1 class="fw-bold text-black">미리 준비하는</h1>
-          <h1 class="fw-bold text-black">X-MAS 선물</h1>
-          <a href="">바로가기</a>
+          <h1 class="fw-bold text-black">자동차 적금</h1>
+          <RouterLink :to="{ name: 'Car' }">바로가기</RouterLink>
         </div>
       </div>
 

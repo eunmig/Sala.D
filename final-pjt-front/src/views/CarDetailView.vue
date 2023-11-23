@@ -1,15 +1,15 @@
 <template>
     <div>
-        <div v-if="carInfo">
-            <h1>{{ carInfo.car_name }}</h1>
-            <img :src="imageroute" alt="아직 준비되지 않았습니다">
-            <p>{{ carInfo.price }}만원</p>
-            <p>출시 연도: {{ carInfo.year }}</p>
-            <p>나의 연봉: {{ user.salary }}</p>
-        </div>
-        <div v-else>
-            <p>Loading...</p>
-        </div>
+      <div v-if="carInfo" class="car-info-container">
+        <h1 class="car-title">{{ carInfo.car_name }}</h1>
+        <img :src="imageroute" alt="아직 준비되지 않았습니다" class="car-image">
+        <h2 class="car-price">{{ carInfo.price }}만원</h2>
+        <p>출시 연도: {{ carInfo.year }}</p>
+        <p>나의 연봉: {{ user.salary }}</p>
+      </div>
+      <div v-else>
+        <p>Loading...</p>
+      </div>
     </div>
     <hr>
       <h2>추천 예금</h2>
@@ -146,5 +146,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
+@import "@/views/CarDetailView.scss"
 
 </style>
