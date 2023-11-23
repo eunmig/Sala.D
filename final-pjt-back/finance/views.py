@@ -305,7 +305,7 @@ def liked_D_products(request):
     return Response(serializer.data)
 
 @api_view(['GET'])
-def liked_D_products(request):
+def liked_S_products(request):
     liked_products = LikeSavingProducts.objects.filter(user_id=request.user).values('product_id')
     product_ids = [item['product_id'] for item in liked_products]
     

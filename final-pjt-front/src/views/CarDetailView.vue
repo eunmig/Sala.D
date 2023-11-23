@@ -11,8 +11,8 @@
             <p>Loading...</p>
         </div>
     </div>
-
-      <h2>추천 상품</h2>
+    <hr>
+      <h2>추천 예금</h2>
       <table>
         <thead>
           <tr>
@@ -20,7 +20,7 @@
             <th>상품이름</th>
             <th>최고 우대 금리</th>
             <th>기간</th>
-            <th>예상 금액</th>
+
           </tr>
         </thead>
         <tbody>
@@ -28,6 +28,36 @@
             <td>{{ recommendation.deposit_product.kor_co_nm }}</td>
             <td>              
                 <RouterLink :to="{ name: 'FinanceItemDetail', params: { id: recommendation.deposit_product.fin_prdt_cd } }">
+                {{ recommendation.deposit_product.fin_prdt_nm }}
+                 </RouterLink>
+            </td>
+            <td>{{ recommendation.options.intr_rate }}%</td>
+            <td>{{ recommendation.options.save_trm }} 개월</td>
+  
+          </tr>
+        </tbody>
+      </table>
+      <hr>
+      <h2>추천 적금</h2>
+      <div>
+        <label for="monthlyInvestment">고정 적금 금액: </label>
+        <input v-model="monthlyInvestment" type="number" id="monthlyInvestment" />
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>은행명</th>
+            <th>상품이름</th>
+            <th>최고 우대 금리</th>
+            <th>기간</th>
+            <th>예상 최대 금액</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(recommendation, index) in bestSaving.recommendations" :key="index">
+            <td>{{ recommendation.deposit_product.kor_co_nm }}</td>
+            <td>              
+                <RouterLink :to="{ name: 'FinanceItemDetail2', params: { id: recommendation.deposit_product.fin_prdt_cd } }">
                 {{ recommendation.deposit_product.fin_prdt_nm }}
                  </RouterLink>
             </td>
@@ -79,22 +109,40 @@ const recProducts = function() {
     })
     .then((res) => {
         bestProduct.value = res.data
+        recSaving()
     })
     .catch(err => console.log(err))
 }
 
-onMounted(() => {
-    oneCar()
-    recProducts()
-})
+const bestSaving = ref([])
+const recSaving = function() {
+    axios({
+        method: 'get',
+        url: `${authStore.API_URL}/finance/saving-products/top_rate/`,
+        headers: {
+            Authorization: `Token ${authStore.token}`
+        }
+    })
+    .then((res) => {
+      bestSaving.value = res.data
+    })
+    .catch(err => console.log(err))
+}
+
+const monthlyInvestment = ref(100);
 
 const calculateEarning = (saveTrm, intrRate) => {
-  const monthlyPay = user.salary / 12;
+  const monthlyPay = monthlyInvestment.value || 100;
   const originalMoney = monthlyPay * saveTrm;
   const intrMoney = originalMoney * (intrRate / 100);
   const finalResult = (originalMoney + intrMoney) - intrMoney * 0.154;
   return finalResult.toFixed(2); // Adjust the number of decimal places as needed
 }
+onMounted(() => {
+    oneCar()
+    recProducts()
+})
+
 </script>
 
 <style scoped>
