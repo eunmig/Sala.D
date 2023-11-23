@@ -12,6 +12,7 @@ import ExchangeView from '@/views/ExchangeView.vue'
 import ProfileView from '@/views/ProfileView.vue'
 import EditPostView from '@/views/EditPostView.vue'
 import RecommandCarView from '@/views/RecommandCarView.vue'
+import CarDetailView from '@/views/CarDetailView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -80,6 +81,11 @@ const router = createRouter({
       path: '/recommand_car',
       name: 'Car',
       component: RecommandCarView
+    },
+    {
+      path: '/detail_car/:car_pk',
+      name: 'CarDetail',
+      component: CarDetailView
     },
   ]
 })

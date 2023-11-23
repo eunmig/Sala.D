@@ -59,3 +59,9 @@ def get_my_cars(request, salary_level):
     cars = get_list_or_404(Car, salary_level=salary_level)
     serializer = CarSerializer(cars, many=True)
     return Response(serializer.data)
+
+@api_view(['GET'])
+def get_one_car(request, car_pk):
+    car = get_object_or_404(Car, pk=car_pk)
+    serializer = CarSerializer(car)
+    return Response(serializer.data)
