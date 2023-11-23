@@ -147,7 +147,24 @@ const deleteComment = function (commentId) {
 
 const deletePost = () => {
     console.log('포스트 삭제 완료')
-    router.push({ name:'Post' })
+    axios({
+        method: 'delete',
+        url: `${store.API_URL}/community/post_delete/${route.params.id}/`,
+        headers: {
+            Authorization: `Token ${token}`
+        }
+    }).then((res) => {
+        // Remove the deleted post from local storage
+        const communityData = JSON.parse(localStorage.getItem('community')) || { posts: [], categories: [] };
+
+        // Filter out the deleted post
+        communityData.posts = communityData.posts.filter(post => post.id !== route.params.id);
+
+        // Update local storage
+        localStorage.setItem('community', JSON.stringify(communityData));
+
+        router.push({ name: 'Post' });
+    })
 }
 
 
