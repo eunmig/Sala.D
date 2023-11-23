@@ -4,7 +4,7 @@ import axios, { all } from 'axios'
 import router from '@/router/index.js'
 
 export const useAuthStore = defineStore('auth', () => {
-
+  const count = ref(0)
   const API_URL = 'http://127.0.0.1:8000'
 
   
@@ -168,7 +168,8 @@ export const useAuthStore = defineStore('auth', () => {
     token,
     isAuthenticated,
     userId,
-    userData
+    userData,
+    count
   }
 
 }, { persist: true})

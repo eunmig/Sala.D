@@ -1,13 +1,13 @@
 <template>
     <div class="two alt-two">
         <h1>금융 아이템 목록 페이지
-            <span>예적금 목록</span>
+            <span>예금 목록</span>
         </h1>
         <br>
     </div>
     <div>
-    <RouterLink class="link" :to="{ name:'FinanceItems2' }">적금 리스트</RouterLink> | 
-        <p>예금 리스트</p>
+    <span class="link2">예금 리스트</span>
+    <RouterLink class="link" :to="{ name:'FinanceItems2' }">적금 리스트</RouterLink> 
     </div>  
     <FinanceList/>
 

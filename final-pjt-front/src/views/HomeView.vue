@@ -1,4 +1,14 @@
 <template>
+<div class="video-container" v-if="showVideo && isAuthenticated">
+  <button @click="toggleVideo">skip</button>
+  <video ref="myVideo" width="320" height="240" autoplay muted @ended="onVideoEnded">
+    <source :src="videoSource" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</div>
+
+<div v-else>
+
   <div id="carouselExampleIndicators" class="carousel slide">
     <div class="carousel-indicators">
       <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 0"></button>
@@ -93,9 +103,26 @@
     </div>
   </div>
   </div>
+</div>
 </template>
 
 <script setup>
+import { computed, onMounted, ref } from 'vue'
+import { useAuthStore } from '../stores/auth'
+
+const authStore = useAuthStore()
+const isAuthenticated = authStore.isAuthenticated
+
+const showVideo = ref(true)
+const toggleVideo = () => {
+  showVideo.value = false
+}
+const videoSource = computed(() => '/src/assets/video/intro.mp4')
+const count = ref(0)
+const onVideoEnded = () => {
+  showVideo.value = false
+  count.value = 1
+}
 
 
 </script>
