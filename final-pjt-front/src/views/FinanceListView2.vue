@@ -6,9 +6,9 @@
         <br>
     </div>
     <div>
-        
-    <span class="link2">적금 리스트</span>
     <RouterLink class="link" :to="{ name:'FinanceItems' }">예금 리스트</RouterLink> 
+    <span class="link2">적금 리스트</span>
+    
     </div>  
     <FinanceList2/>
     <br>
