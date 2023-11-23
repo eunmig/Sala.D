@@ -23,6 +23,7 @@
 
       <button type="submit">수정하기</button>
     </form>
+    <button @click="deletePost" class="delete-btn">게시글 삭제</button>
   </div>
 </template>
 
@@ -61,6 +62,28 @@
         router.push({ name: 'DetailView', params: { id: post_pk } })
     }).catch(err => console.log(err))
     }
+
+    const deletePost = () => {
+    console.log('포스트 삭제 완료')
+    axios({
+        method: 'delete',
+        url: `${store.API_URL}/community/post_delete/${post_pk}/`,
+        headers: {
+            Authorization: `Token ${token}`
+        }
+    }).then((res) => {
+        // Remove the deleted post from local storage
+        const communityData = JSON.parse(localStorage.getItem('community')) || { posts: [], categories: [] };
+        console.log(communityData)
+        // Filter out the deleted post
+        communityData.posts = communityData.posts.filter(post => post.id !== post_pk);
+
+        // Update local storage
+        localStorage.setItem('community', JSON.stringify(communityData));
+
+        router.push({ name: 'Post' });
+    })
+}
 
 </script>
 

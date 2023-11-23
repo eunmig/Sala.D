@@ -20,6 +20,9 @@ const store = useCommunityStore()
 
 onMounted(() => {
     store.getPosts()
+    console.log('onMounted: PostList')
+    console.log('남은 게시글.', store.posts)
+
 })
 
 </script>

@@ -33,7 +33,7 @@ def category_create(request):
 @permission_classes([IsAuthenticatedOrReadOnly])
 def post_list(request):
     if request.method == 'GET':
-        posts = get_list_or_404(Post)
+        posts = Post.objects.all()
         serializer = PostListSerializer(posts, many=True)
         return Response(serializer.data)
     
@@ -63,19 +63,22 @@ def post_UD(request, post_pk):
     if request.method == 'GET':
         serializer = PostSerializer(post)
         return Response(serializer.data)
-    
-    elif request.method == 'DELETE':
-        post.delete()
-        data = {
-            'delete': f'데이터 {post_pk}번 글이 삭제되었습니다.',
-        }
-        return Response(data, status=status.HTTP_204_NO_CONTENT)
 
     elif request.method == 'PUT':
         serializer = PostSerializer(post, data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)
+
+
+@api_view(['DELETE'])
+def post_del(request, post_pk):
+    post = get_object_or_404(Post, pk=post_pk)
+    post.delete()
+    data = {
+        'delete': f'데이터 {post_pk}번 글이 삭제되었습니다.',
+    }
+    return Response(data, status=status.HTTP_204_NO_CONTENT)
 
 
 @api_view(['GET'])
