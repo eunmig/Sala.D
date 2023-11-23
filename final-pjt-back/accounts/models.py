@@ -25,7 +25,7 @@ class User(AbstractUser):
         elif 5000 <= self.salary < 8000:
             self.salary_level = 4
         else:
-            self.salary_level = 0  # or any other default value
+            self.salary_level = 5  # or any other default value
 
         super(User, self).save(*args, **kwargs)
 
