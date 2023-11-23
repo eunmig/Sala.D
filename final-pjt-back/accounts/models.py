@@ -46,6 +46,6 @@ class Car(models.Model):
         elif 5000 <= self.price < 8000:
             self.salary_level = 4
         else:
-            self.salary_level = 0 
+            self.salary_level = 5
 
-        super(User, self).save(*args, **kwargs)
+        super(Car, self).save(*args, **kwargs)

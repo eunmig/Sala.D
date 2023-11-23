@@ -1,6 +1,6 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import axios from 'axios'
+import axios, { all } from 'axios'
 import router from '@/router/index.js'
 
 export const useAuthStore = defineStore('auth', () => {
@@ -133,6 +133,18 @@ export const useAuthStore = defineStore('auth', () => {
       })
   }
 
+  const allCar = ref([])
+  const getCar = function () {
+    axios({
+      method: 'get',
+      url: `${API_URL}/account/cars/`
+    }).then((res) => {
+      allCar.value = res.data
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
 
   return { 
     API_URL, 
@@ -142,6 +154,8 @@ export const useAuthStore = defineStore('auth', () => {
     getRates,
     getUserData,
     getProducts,
+    getCar,
+    allCar,
     token,
     isAuthenticated,
     userId,

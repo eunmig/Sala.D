@@ -4,10 +4,10 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
 from rest_framework.response import Response
-from .serializers import UserDataSerializer
+from .serializers import UserDataSerializer, CarSerializer
 import requests
 from django.shortcuts import render, get_object_or_404, get_list_or_404
-from .models import User
+from .models import User, Car
 
 
 # Create your views here.
@@ -46,3 +46,22 @@ def update_profile(request, user_pk):
         return Response(serializer.data)
     else:
         return Response(serializer.errors, status=400)
+
+
+@api_view(['GET'])
+def get_carinfo(request):
+    cars = get_list_or_404(Car)
+    serializer = CarSerializer(cars, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def get_my_cars(request, salary_level):
+    cars = get_list_or_404(Car, salary_level=salary_level)
+    serializer = CarSerializer(cars, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def get_one_car(request, car_pk):
+    car = get_object_or_404(Car, pk=car_pk)
+    serializer = CarSerializer(car)
+    return Response(serializer.data)

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User
+from .models import User, Car
 
 from django.shortcuts import get_object_or_404, get_list_or_404
 from rest_framework.decorators import api_view, permission_classes
@@ -32,4 +32,9 @@ class UserDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields =  '__all__'
+
+class CarSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Car
+        fields = '__all__'
 
