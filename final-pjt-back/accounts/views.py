@@ -56,7 +56,10 @@ def get_carinfo(request):
 
 @api_view(['GET'])
 def get_my_cars(request, salary_level):
-    cars = get_list_or_404(Car, salary_level=salary_level)
+    if salary_level == 5:
+        cars = Car.objects.all()
+    else:
+        cars = get_list_or_404(Car, salary_level=salary_level)
     serializer = CarSerializer(cars, many=True)
     return Response(serializer.data)
 

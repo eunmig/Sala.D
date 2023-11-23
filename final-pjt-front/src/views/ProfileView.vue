@@ -92,8 +92,7 @@
   
           <hr>
           </div>
-  
-      <hr>
+
       <PasswordChangePopup />
     </div>
   </div>
