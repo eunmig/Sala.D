@@ -12,10 +12,10 @@
     
   <table>
     <colgroup>
-      <col style="width: 250px;"> <!-- Adjust the width as needed -->
-      <col style="width: 400px;"> <!-- Adjust the width as needed -->
-      <col style="width: 150px;"> <!-- Adjust the width as needed -->
-      <col style="width: 350px;"> <!-- Adjust the width as needed -->
+      <col style="width: 250px;">
+      <col style="width: 400px;">
+      <col style="width: 150px;">
+      <col style="width: 350px;">
     </colgroup>
     <thead>
       <tr>
