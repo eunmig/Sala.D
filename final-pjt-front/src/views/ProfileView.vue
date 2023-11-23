@@ -8,6 +8,7 @@
     <hr>
     <h3>ID : {{ userData.username }}</h3>
     <div class="profile-form">
+      <form action=""></form>
       <div class="form-field">
         <label for="last_name">이름: </label>
         <input v-model="userData.last_name" placeholder="성" id="last_name" class="input" />
@@ -23,6 +24,8 @@
         <label for="salary">연봉: </label>
         <input v-model="userData.salary" placeholder="-" id="salary" class="input" />
       </div> 
+      <button @click="submitChanges">회원 정보만 수정</button>
+      
       <button class="password-pop" @click="openPasswordChangePopup">비밀번호 변경</button>   
       <hr>
       <br>
