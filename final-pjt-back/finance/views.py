@@ -183,31 +183,35 @@ def deposit_PO(request, fin_prdt_cd):
 
 
 def top_rate(request):
-    options = DepositOptions.objects.all()
+    save_trms = [6, 12, 24, 36]
+    recommendations = []
 
-    # 금리가 없는 경우 default 값 -1을 저장했기 때문에, DB 내에서 최저 값임
-    max_intr_rate = -1 
+    for save_trm in save_trms:
+        # Filter options for the current save_trm
+        options = DepositOptions.objects.filter(save_trm=save_trm)
 
-    top_option = None 
-    top_product = None 
+        # Sort options by interest rate in descending order
+        sorted_options = sorted(options, key=lambda x: x.intr_rate, reverse=True)
 
-    # 가져온 options 아이템에서 최고 값을 찾고, 최고 값을 찾으면 해당 option으로 갱신
-    for option in options:
-        if option.intr_rate > max_intr_rate:
-            max_intr_rate = option.intr_rate
-            top_option = option
+        # Take the top 2 options
+        top_options = sorted_options[:3]
 
-    # top_option 에 속한 외래키 product를 새로운 아이템으로 지정.
-    top_product = top_option.product
+        for top_option in top_options:
+            top_product = top_option.product
 
-    option_serializer = OptionsSerializer(top_option)
-    product_serializer = ProductsSerializer(top_product)
-    # 해당 데이터 반환
-    response_data = {
-        'deposit_product': product_serializer.data,
-        'options': option_serializer.data,
-    }
+            option_serializer = OptionsSerializer(top_option)
+            product_serializer = ProductsSerializer(top_product)
 
+            recommendation_data = {
+                'save_trm': save_trm,
+                'deposit_product': product_serializer.data,
+                'options': option_serializer.data,
+            }
+
+            recommendations.append(recommendation_data)
+
+    # Return the recommendations
+    response_data = {'recommendations': recommendations}
     return JsonResponse(response_data)
 
 @api_view(['POST'])
