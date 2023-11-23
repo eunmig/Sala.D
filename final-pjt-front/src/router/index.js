@@ -112,7 +112,7 @@ router.beforeEach((to, from, next) => {
   const isAuthenticated = checkAuthentication()
 
   // Routes that do not require authentication
-  const publicRoutes = ['LogIn', 'SignUp']
+  const publicRoutes = ['LogIn', 'SignUp', 'Home']
 
   if (!isAuthenticated && !publicRoutes.includes(to.name)) {
     console.log('로그인이 필요합니다.')
