@@ -22,7 +22,8 @@
       <div class="form-field">
         <label for="salary">연봉: </label>
         <input v-model="userData.salary" placeholder="-" id="salary" class="input" />
-      </div>    
+      </div> 
+      <button class="password-pop" @click="openPasswordChangePopup">비밀번호 변경</button>   
       <hr>
       <br>
       <h2>추천 차량 목록</h2>
@@ -61,7 +62,6 @@
         <hr>
         </div>
       <hr>
-      <PasswordChangePopup />
     </div>
   </div>
 </template>
@@ -75,6 +75,10 @@ import { Bar } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
+const openPasswordChangePopup = () => {
+  // 팝업 창을 여는 로직을 추가
+  window.open('/password-change-popup', '_blank', 'width=400,height=400');
+}
 
 const authStore = useAuthStore()
 const userData = authStore.userData
