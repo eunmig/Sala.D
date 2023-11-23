@@ -50,12 +50,48 @@
   </div>
 
   <br><br>
-  <div>
-    <h1 class="content">자동차를 구매하자 🚗</h1>
-      <br><br>
-      <p>주어진 연봉 정보를 기반으로</p>
-      <p>1. 금융상품과 금액 설정 -> 만기 시 해당하는 금액대의 자동차 추천</p>
-      <p>2. 희망 자동차와 연봉 정보 -> 적절한 자동차 추천</p>
+
+  <div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">나에게 맞는 자동차를 구매하자 🚗💨</h3>
+        </div>
+        <div class="card-body">
+          <ul>
+            <p>주어진 연봉 정보를 기반으로</p>
+            <li>금융상품과 금액 설정 -> 만기 시 해당하는 금액대의 자동차 추천</li>
+            <li>희망 자동차와 연봉 정보 -> 적절한 자동차 추천</li>
+          </ul>
+          <br>
+          <ul>
+            <p>연봉별 자동차</p>
+            <li>- 3,000만원 이하 : 스파크, 레이, 모닝 => 경차 (권장하지 않음😢)</li>
+            <li>- 3,500만원 이하 : k3, 아반떼, 셀토스 => 경차 ~ 준중형</li>
+            <li>- 4,000만원 이하 : 코나, 니로, k5</li>
+            <li>- 6,000만원 이하 : 그랜져, 싼타페, G70</li>
+            <li>- 8,000만원 이하 :  g80, gv80, 외제차</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">단리, 복리란 🧐?</h3>
+        </div>
+        <div class="card-body">
+          <p>금리 계산방법의 종류</p>
+          <ul>
+            <li>단기 : 원금에 대해서만 이지가 붙는 방식</li>
+            <li>복리 : '원금 + 이자'에 이자가 붙는 방식</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
   </div>
 </template>
 
