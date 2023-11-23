@@ -13,11 +13,9 @@ export const useAuthStore = defineStore('auth', () => {
     axios({
       method: 'get',
       url: `${API_URL}/exchange/save/`,
-      headers: {
-        Authorization: `Token ${token}`
-      }
     })
     .then((res) => {
+      getProducts()
       console.log('환율 정보 저장')
     })
     .catch(err => console.log(err))
@@ -33,10 +31,12 @@ export const useAuthStore = defineStore('auth', () => {
       url: `${API_URL}/finance/save-deposit-products/`
     })
     .then((res) => {
+      getSavingProducts()
       console.log('금융 상품 정보 저장')
     })
     .catch(err => console.log(err))
   }
+
 
   const getSavingProducts = function() {
     axios({
@@ -44,7 +44,7 @@ export const useAuthStore = defineStore('auth', () => {
       url: `${API_URL}/finance/save-saving-products/`
     })
     .then((res) => {
-      console.log('금융 상품 정보 저장')
+      console.log('금융 상품 정보 저장2')
     })
     .catch(err => console.log(err))
   }
@@ -103,8 +103,6 @@ export const useAuthStore = defineStore('auth', () => {
         token.value = res.data.key
         userId.value = `${username}`
         getRates()
-        getProducts()
-        getSavingProducts()
         getUserData({ username })
         window.alert('로그인 완료')
         router.push({ name: 'Home' })

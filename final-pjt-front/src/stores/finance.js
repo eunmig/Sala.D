@@ -34,6 +34,7 @@ export const useFinanceStore = defineStore('finance', () => {
             }
         }).then(res => {
             savings.value = res.data
+            console.log('savings', savings)
         }).catch(err => console.log(err))
 
     }
@@ -55,6 +56,6 @@ export const useFinanceStore = defineStore('finance', () => {
         saveDeposits,
         API_URL,
         products,
-        savings
+        savings,
     }
 }, { persist: true})

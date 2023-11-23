@@ -31,15 +31,15 @@ class SavOptionsSerializer(serializers.ModelSerializer):
 
 
 class SavProductsListSerializer(serializers.ModelSerializer):
-    depositoptions_set = SavOptionsSerializer(many=True, read_only=True)
+    savingoptions_set = SavOptionsSerializer(many=True, read_only=True)
 
     class Meta:
         model = SavingProducts
-        fields=('fin_prdt_cd','kor_co_nm','fin_prdt_nm','dcls_strt_day', 'depositoptions_set')
+        fields=('fin_prdt_cd','kor_co_nm','fin_prdt_nm','dcls_strt_day', 'savingoptions_set')
 
 
 class SavProductsSerializer(serializers.ModelSerializer):
-    depositoptions_set = SavOptionsSerializer(many=True, read_only=True)
+    savingoptions_set = SavOptionsSerializer(many=True, read_only=True)
 
     class Meta:
         model = SavingProducts

@@ -1,19 +1,6 @@
 <template>
-  <!-- <div> -->
-    <!-- <h3>username: {{ userData.username }}</h3>
-    <div>
-      <p>이름: 
-        <input v-model="userData.last_name" placeholder="성" />
-        <input v-model="userData.first_name" placeholder="이름" />
-      </p>
-      <p>이메일: <input v-model="userData.email" placeholder="abc@efg.com" /></p>
-      <p>연봉: <input v-model="userData.salary" placeholder="-" /></p>
-      <button @click="submitChanges">회원 정보만 수정</button> -->
-  
   <div class="two alt-two">
-    <h1>My Profile Page
-        <span>   </span>
-    </h1>
+    <h1>My Profile Page</h1>
     <br>
   </div>
 
@@ -81,7 +68,6 @@
 
 <script setup>
 import axios from 'axios';
-import RecommandCarView from './RecommandCarView.vue';
 import PasswordChangePopup from '../components/PasswordChangePopup.vue'
 import { useAuthStore } from '../stores/auth'
 import { onMounted, ref, watch, computed } from 'vue'
@@ -115,12 +101,13 @@ const submitChanges = async () => {
   }
 }
 
+// 좋아요 예금 상품 가져오기
 const likedProducts = ref([])
 
-const get_likes = function () {
+const get_likes_D = function () {
   axios({
     method: 'get',
-    url: `${authStore.API_URL}/finance/liked_products/`,
+    url: `${authStore.API_URL}/finance/liked-products/`,
     headers: {
       Authorization: `Token ${authStore.token}`
     }
@@ -130,9 +117,25 @@ const get_likes = function () {
   .catch(err => console.log(err))
 }
 
+//좋아요 적금 상품 가져오기
+const likedSavings = ref([])
+
+const get_likes_S = function () {
+  axios({
+    method: 'get',
+    url: `${authStore.API_URL}/finance/liked-saving/`,
+    headers: {
+      Authorization: `Token ${authStore.token}`
+    }
+  }).then((res) => {
+    likedSavings.value = res.data
+  })
+  .catch(err => console.log(err))
+}
 
 onMounted(() => {
-  get_likes()
+  get_likes_D()
+  get_likes_S()
   console.log('onMount: ProfileView', likedProducts)
 })
 

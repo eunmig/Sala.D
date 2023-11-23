@@ -10,7 +10,7 @@ urlpatterns = [
     path('deposit-product/<str:fin_prdt_cd>/', views.get_deposit_item),
     path('deposit-products/top_rate/', views.top_rate_D),
     path('likes/<str:product_cd>/', views.likes_d),
-    path('liked_products/', views.liked_D_products),
+    path('liked-products/', views.liked_D_products),
     path('deposit-product-options/<str:fin_prdt_cd>/', views.deposit_PO),
 
     #예금
@@ -20,4 +20,6 @@ urlpatterns = [
     path('saving-products/top_rate/', views.top_rate_S),
     path('saving-like/<str:product_cd>/', views.likes_s),
     path('liked-saving/', views.liked_D_products),
+    path('saving-product-options/<str:fin_prdt_cd>/', views.deposit_SO),
+
 ]

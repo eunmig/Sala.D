@@ -238,6 +238,6 @@ def saveExchangeRate(request):
 
 @api_view(['GET'])
 def getExchangeRate(request):
-    e_rates = get_list_or_404(Exchange)
+    e_rates = Exchange.objects.all()
     serializer = ExchangeSerializer(e_rates, many=True)
     return Response(serializer.data)

@@ -6,13 +6,16 @@ import CreatePostView from '@/views/CreatePostView.vue'
 import PostListView from '@/views/PostListView.vue'
 import DetailView from '@/views/DetailView.vue'
 import FinanceListView from '@/views/FinanceListView.vue'
+import FinanceListView2 from '@/views/FinanceListView2.vue'
 import FinanceDetailView from '@/views/FinanceDetailView.vue'
+import FinanceDetailView2 from '@/views/FinanceDetailView2.vue'
 import BankView from '@/views/BankView.vue'
 import ExchangeView from '@/views/ExchangeView.vue'
 import ProfileView from '@/views/ProfileView.vue'
 import EditPostView from '@/views/EditPostView.vue'
 import RecommandCarView from '@/views/RecommandCarView.vue'
 import CarDetailView from '@/views/CarDetailView.vue'
+import test from '@/views/test.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -53,9 +56,19 @@ const router = createRouter({
       component: FinanceListView
     },
     {
+      path: '/financeList2',
+      name: 'FinanceItems2',
+      component: FinanceListView2
+    },
+    {
       path: '/financeItem/:id',
       name: 'FinanceItemDetail',
       component: FinanceDetailView
+    },
+    {
+      path: '/financeItem2/:id',
+      name: 'FinanceItemDetail2',
+      component: FinanceDetailView2
     },
     {
       path: '/bank',
@@ -86,6 +99,11 @@ const router = createRouter({
       path: '/detail_car/:car_pk',
       name: 'CarDetail',
       component: CarDetailView
+    },
+    {
+      path: '/test',
+      name: 'test',
+      component: test
     },
   ]
 })

@@ -13,7 +13,7 @@
         <tr v-for="option in options" :key="option.id">
           <td>{{ option.save_trm }}개월</td>
           <td>{{ option.intr_rate_type_nm }}</td>
-          <td>{{ option.intr_rate }}</td>
+          <td>{{ option.intr_rate }} / {{ option.intr_rate2 }}</td>
         </tr>
       </tbody>
     </table>

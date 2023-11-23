@@ -6,28 +6,26 @@
         <br>
     </div>
     <div>
-    <RouterLink class="link" :to="{ name:'FinanceItems2' }">적금 리스트</RouterLink> | 
-        <p>예금 리스트</p>
-    </div>  
-    <FinanceList/>
+        
+        <h2>적금</h2>
+    <FinanceList2/>
+    </div>
 
     <br>
 
 </template>
 
 <script setup>
-import FinanceList from '../components/FinanceList.vue'
+
 import FinanceList2 from '../components/FinanceList2.vue'
 import { onMounted, ref } from 'vue'
 import { useFinanceStore } from '../stores/finance'
-import { RouterLink } from 'vue-router'
-
 
 const store = useFinanceStore()
 
 
 onMounted(()=> {
-    store.getProducts()
+    store.getSavingsProducts()
     console.log('onMount: FinancialListView.vue')
 })
 </script>

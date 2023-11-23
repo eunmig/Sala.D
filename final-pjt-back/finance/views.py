@@ -91,6 +91,7 @@ def save_DP(request):
     return JsonResponse({'message': 'Data saved successfully'})
 
 
+
 @api_view(['GET'])
 def save_SP(request):
     api_key = settings.FINANCE_API_KEY
@@ -118,7 +119,10 @@ def save_SP(request):
             defaults=save_data
         )
 
-    for li in bank_list.get('result').get('optionList'):
+    # Sort the optionList based on save_trm
+    option_list = sorted(bank_list.get('result').get('optionList'), key=lambda x: int(x.get('save_trm')))
+
+    for li in option_list:
         fin_prdt_cd = li.get('fin_prdt_cd')
         save_trm = li.get('save_trm')
 
@@ -153,13 +157,13 @@ def save_SP(request):
         else:
             # If no options exist, create a new one
             SavingOptions.objects.create(**save_data)
-    SavingOptions.objects.filter(intr_rate = -1).delete()
+
+    # Remove entries with intr_rate -1
+    SavingOptions.objects.filter(intr_rate=-1).delete()
 
     return JsonResponse({'message': 'Data saved successfully'})
 
 
-# 요청사항이 'GET'이라면, DepositProducts의 모든 정보를 요청하여 조회하기
-# 요청사항이 'POST'라면, DepositProducts가 정보가 생성되는지 확인
 @api_view(['GET'])
 def deposit_products(request):
     finlifes = get_list_or_404(DepositProducts)
@@ -191,6 +195,11 @@ def deposit_PO(request, fin_prdt_cd):
     serializer = OptionsSerializer(option_list, many=True)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def deposit_SO(request, fin_prdt_cd):
+    option_list = SavingOptions.objects.filter(fin_prdt_cd=fin_prdt_cd)
+    serializer = SavOptionsSerializer(option_list, many=True)
+    return Response(serializer.data)
 
 def top_rate_D(request):
     save_trms = [6, 12, 24, 36]
