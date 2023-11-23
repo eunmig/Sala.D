@@ -38,6 +38,16 @@ export const useAuthStore = defineStore('auth', () => {
     .catch(err => console.log(err))
   }
 
+  const getSavingProducts = function() {
+    axios({
+      method: 'get',
+      url: `${API_URL}/finance/save-saving-products/`
+    })
+    .then((res) => {
+      console.log('금융 상품 정보 저장')
+    })
+    .catch(err => console.log(err))
+  }
 
   // 회원가입 로직
   const signUp = function (payload) {
@@ -94,6 +104,7 @@ export const useAuthStore = defineStore('auth', () => {
         userId.value = `${username}`
         getRates()
         getProducts()
+        getSavingProducts()
         getUserData({ username })
         window.alert('로그인 완료')
         router.push({ name: 'Home' })

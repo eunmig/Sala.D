@@ -20,6 +20,7 @@
             <th>상품이름</th>
             <th>최고 우대 금리</th>
             <th>기간</th>
+            <th>예상 금액</th>
           </tr>
         </thead>
         <tbody>
@@ -32,6 +33,7 @@
             </td>
             <td>{{ recommendation.options.intr_rate }}%</td>
             <td>{{ recommendation.options.save_trm }} 개월</td>
+            <td>{{ calculateEarning(recommendation.options.save_trm, recommendation.options.intr_rate) }}만원</td>
           </tr>
         </tbody>
       </table>
@@ -85,6 +87,14 @@ onMounted(() => {
     oneCar()
     recProducts()
 })
+
+const calculateEarning = (saveTrm, intrRate) => {
+  const monthlyPay = user.salary / 12;
+  const originalMoney = monthlyPay * saveTrm;
+  const intrMoney = originalMoney * (intrRate / 100);
+  const finalResult = (originalMoney + intrMoney) - intrMoney * 0.154;
+  return finalResult.toFixed(2); // Adjust the number of decimal places as needed
+}
 </script>
 
 <style scoped>

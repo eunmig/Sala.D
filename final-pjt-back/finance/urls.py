@@ -3,12 +3,21 @@ from . import views
 
 urlpatterns = [
     path('', views.index),
+
+    #적금
     path('save-deposit-products/', views.save_DP),
-    path('save-saving-products/', views.save_SP),
     path('deposit-products/', views.deposit_products),
     path('deposit-product/<str:fin_prdt_cd>/', views.get_deposit_item),
+    path('deposit-products/top_rate/', views.top_rate_D),
+    path('likes/<str:product_cd>/', views.likes_d),
+    path('liked_products/', views.liked_D_products),
     path('deposit-product-options/<str:fin_prdt_cd>/', views.deposit_PO),
-    path('deposit-products/top_rate/', views.top_rate),
-    path('likes/<str:product_cd>/', views.likes),
-    path('liked_products/', views.liked_products),
+
+    #예금
+    path('save-saving-products/', views.save_SP),
+    path('saving-products/', views.saving_products),
+    path('saving-product/<str:fin_prdt_cd>/', views.get_saving_item),
+    path('saving-products/top_rate/', views.top_rate_S),
+    path('saving-like/<str:product_cd>/', views.likes_s),
+    path('liked-saving/', views.liked_D_products),
 ]

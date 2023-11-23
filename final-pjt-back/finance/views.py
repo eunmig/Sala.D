@@ -5,8 +5,8 @@ from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnl
 from rest_framework.response import Response
 import requests
 from django.conf import settings
-from .serializers import ProductsSerializer, OptionsSerializer, ProductsListSerializer
-from .models import DepositOptions, DepositProducts, LikeProducts
+from .serializers import ProductsSerializer, OptionsSerializer, ProductsListSerializer, SavOptionsSerializer, SavProductsListSerializer, SavProductsSerializer
+from .models import DepositOptions, DepositProducts, LikeDepositProducts, LikeSavingProducts, SavingOptions, SavingProducts
 
 
 @api_view(['GET'])
@@ -113,7 +113,7 @@ def save_SP(request):
             'dcls_end_day': li.get('dcls_end_day'),
         }
 
-        product, created = DepositProducts.objects.update_or_create(
+        product, created = SavingProducts.objects.update_or_create(
             fin_prdt_cd=save_data['fin_prdt_cd'],
             defaults=save_data
         )
@@ -122,7 +122,7 @@ def save_SP(request):
         fin_prdt_cd = li.get('fin_prdt_cd')
         save_trm = li.get('save_trm')
 
-        product = get_object_or_404(DepositProducts, fin_prdt_cd=fin_prdt_cd)
+        product = get_object_or_404(SavingProducts, fin_prdt_cd=fin_prdt_cd)
 
         intr_rate = li.get('intr_rate')
         if intr_rate is None:
@@ -142,7 +142,7 @@ def save_SP(request):
         }
 
         # Filter existing options based on fin_prdt_cd and save_trm
-        existing_options = DepositOptions.objects.filter(
+        existing_options = SavingOptions.objects.filter(
             fin_prdt_cd=fin_prdt_cd,
             save_trm=save_trm
         )
@@ -152,8 +152,8 @@ def save_SP(request):
             existing_options.update(**save_data)
         else:
             # If no options exist, create a new one
-            DepositOptions.objects.create(**save_data)
-    DepositOptions.objects.filter(intr_rate = -1).delete()
+            SavingOptions.objects.create(**save_data)
+    SavingOptions.objects.filter(intr_rate = -1).delete()
 
     return JsonResponse({'message': 'Data saved successfully'})
 
@@ -166,6 +166,11 @@ def deposit_products(request):
     serializer = ProductsListSerializer(finlifes, many=True)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def saving_products(request):
+    finlifes = get_list_or_404(SavingProducts)
+    serializer = SavProductsListSerializer(finlifes, many=True)
+    return Response(serializer.data)
 
 @api_view(['GET'])
 def get_deposit_item(request, fin_prdt_cd):
@@ -173,6 +178,11 @@ def get_deposit_item(request, fin_prdt_cd):
     serializer = ProductsSerializer(product)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def get_saving_item(request, fin_prdt_cd):
+    product = get_object_or_404(SavingProducts, fin_prdt_cd=fin_prdt_cd)
+    serializer = SavProductsSerializer(product)
+    return Response(serializer.data)
 
 # 상품 리스트의 pk값과 options pk 값이 일치하면 pk의 옵션들 모두 출력 
 @api_view(['GET'])
@@ -182,7 +192,7 @@ def deposit_PO(request, fin_prdt_cd):
     return Response(serializer.data)
 
 
-def top_rate(request):
+def top_rate_D(request):
     save_trms = [6, 12, 24, 36]
     recommendations = []
 
@@ -214,8 +224,40 @@ def top_rate(request):
     response_data = {'recommendations': recommendations}
     return JsonResponse(response_data)
 
+def top_rate_S(request):
+    save_trms = [6, 12, 24, 36]
+    recommendations = []
+
+    for save_trm in save_trms:
+        # Filter options for the current save_trm
+        options = SavingOptions.objects.filter(save_trm=save_trm)
+
+        # Sort options by interest rate in descending order
+        sorted_options = sorted(options, key=lambda x: x.intr_rate, reverse=True)
+
+        # Take the top 2 options
+        top_options = sorted_options[:3]
+
+        for top_option in top_options:
+            top_product = top_option.product
+
+            option_serializer = SavOptionsSerializer(top_option)
+            product_serializer = SavProductsSerializer(top_product)
+
+            recommendation_data = {
+                'save_trm': save_trm,
+                'deposit_product': product_serializer.data,
+                'options': option_serializer.data,
+            }
+
+            recommendations.append(recommendation_data)
+
+    # Return the recommendations
+    response_data = {'recommendations': recommendations}
+    return JsonResponse(response_data)
+
 @api_view(['POST'])
-def likes(request, product_cd):
+def likes_d(request, product_cd):
     product = get_object_or_404(DepositProducts, fin_prdt_cd=product_cd)
 
     if request.user in product.like_users.all():
@@ -228,9 +270,23 @@ def likes(request, product_cd):
     return JsonResponse({'liked': liked})
 
 
+@api_view(['POST'])
+def likes_s(request, product_cd):
+    product = get_object_or_404(SavingProducts, fin_prdt_cd=product_cd)
+
+    if request.user in product.like_users.all():
+        product.like_users.remove(request.user)
+        liked = False
+    else:
+        product.like_users.add(request.user)
+        liked = True
+
+    return JsonResponse({'liked': liked})
+
+
 @api_view(['GET'])
-def liked_products(request):
-    liked_products = LikeProducts.objects.filter(user_id=request.user).values('product_id')
+def liked_D_products(request):
+    liked_products = LikeDepositProducts.objects.filter(user_id=request.user).values('product_id')
     product_ids = [item['product_id'] for item in liked_products]
     
     # Fetch the liked products using the retrieved product ids
@@ -239,4 +295,14 @@ def liked_products(request):
     serializer = ProductsSerializer(liked_products_data, many=True)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def liked_D_products(request):
+    liked_products = LikeSavingProducts.objects.filter(user_id=request.user).values('product_id')
+    product_ids = [item['product_id'] for item in liked_products]
+    
+    # Fetch the liked products using the retrieved product ids
+    liked_products_data = SavingProducts.objects.filter(fin_prdt_cd__in=product_ids)
+    
+    serializer = SavProductsSerializer(liked_products_data, many=True)
+    return Response(serializer.data)
 
