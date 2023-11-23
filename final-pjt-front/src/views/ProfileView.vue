@@ -38,7 +38,9 @@
       </div>    
       <hr>
       <br>
+      <h2>추천 차량 목록</h2>
 
+      <hr>
       <h2>내가 가입한 상품 목록</h2>
       <div>
         <button @click="toggleChart">그래프 열기</button>

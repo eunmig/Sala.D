@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
     path('', views.index),
     path('save-deposit-products/', views.save_DP),
+    path('save-saving-products/', views.save_SP),
     path('deposit-products/', views.deposit_products),
     path('deposit-product/<str:fin_prdt_cd>/', views.get_deposit_item),
     path('deposit-product-options/<str:fin_prdt_cd>/', views.deposit_PO),

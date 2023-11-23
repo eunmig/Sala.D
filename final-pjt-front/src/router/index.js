@@ -11,7 +11,7 @@ import BankView from '@/views/BankView.vue'
 import ExchangeView from '@/views/ExchangeView.vue'
 import ProfileView from '@/views/ProfileView.vue'
 import EditPostView from '@/views/EditPostView.vue'
-
+import RecommandCarView from '@/views/RecommandCarView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -75,6 +75,11 @@ const router = createRouter({
       path: '/edit_post/:post_pk',
       name: 'EditPost',
       component: EditPostView
+    },
+    {
+      path: '/recommand_car',
+      name: 'Car',
+      component: RecommandCarView
     },
   ]
 })
