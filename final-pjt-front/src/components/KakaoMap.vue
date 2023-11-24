@@ -6,13 +6,15 @@
     <br>
   </div>
   <div class="wrapper">
-    <div ref="container" class="first"></div>
-    <div class="control-btns"></div>
+    <div class="map-background">
+      <div ref="container" class="first"></div>
+      <div class="control-btns"></div>
+    </div>
   </div>
   <div class="list"></div>
   
   <div class="map-search">
-    <form>
+    <form class="select-area">
       <label for="sido">
         시 / 도 : 
       </label>
@@ -43,7 +45,9 @@
         <option value="농협">농협</option>
       </select>
     </form>
+    <div class="button-div">
     <button class="btn btn-primary" @click="search">검색</button>
+    </div>
   </div>
 </template>
  

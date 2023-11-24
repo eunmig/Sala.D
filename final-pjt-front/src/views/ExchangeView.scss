@@ -31,18 +31,25 @@ select {
   border-radius: 10px;
   border: 1px solid #777;
   background: transparent;
-  text-align: right;
+  text-align: center;
   padding: 1px 2px;
   font-size: 16px;
 }
 
-#otherAmount,
-#krwAmount {
-  font-size: 30px;
+
+label {
+  margin-bottom: 5px;
+  font-weight: bold;
 }
 
-label, input {
-  padding-bottom: 10px;
+input {
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 20px;
 }
 
 .rate {
@@ -51,11 +58,17 @@ label, input {
   padding: 0 10px;
 }
 
+// .input-container {
+//   display: flex;
+//   flex-direction: row;
+//   align-items: center;
+//   padding: 20px;
+// }
 .input-container {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 20px;
+  flex-direction: column;
+  max-width: 300px;
+  margin: 20px auto;
 }
 
 .exchange-img {

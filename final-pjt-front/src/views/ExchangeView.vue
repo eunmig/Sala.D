@@ -14,11 +14,10 @@
   </div>
   
   <div class="input-container">
-    <label for="otherAmount">{{ targetCurrencyLabel }}:</label>
-    <input v-model="otherAmount" type="number" :id="otherAmountId" @input="convertCurrency(currencies.find(c => c.id === targetCurrency).currency_name)" />
-
-    <label for="krwAmount">KRW:</label>
+    <label class="money-box" for="krwAmount">KRW:</label>
     <input v-model="krwAmount" type="number" id="krwAmount" @input="convertCurrency('KRW')" />
+    <label class="money-box" for="otherAmount">선택: {{ targetCurrencyLabel }}</label>
+    <input v-model="otherAmount" type="number" :id="otherAmountId" @input="convertCurrency(currencies.find(c => c.id === targetCurrency).currency_name)" />
   </div>
 
   </template>
