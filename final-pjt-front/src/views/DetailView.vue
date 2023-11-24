@@ -46,6 +46,13 @@
               <button @click="deleteComment(comment.id)" class="delete-btn">댓글 삭제</button>
               <button @click="showEditForm(comment)" class="edit-btn">댓글 수정</button>
             </div>
+            <div v-show="showEditModal">
+              <form @submit.prevent="editComment">
+                <label for="editedContent">댓글 수정:</label>
+                <input type="text" id="editedContent" v-model.trim="editedContent" class="edit-input">
+                <button type="submit" class="edit-btn">저장</button>
+              </form>
+            </div>
           </li>
         </ul>
       </div>
@@ -54,13 +61,7 @@
 
     <div v-else>Loading</div>
 
-    <div class="modal" v-show="showEditModal">
-      <form @submit.prevent="editComment">
-        <label for="editedContent">댓글 수정:</label>
-        <input type="text" id="editedContent" v-model.trim="editedContent" class="edit-input">
-        <button type="submit" class="edit-btn">저장</button>
-      </form>
-    </div>
+
   </div>
 </template>
 
@@ -92,6 +93,8 @@ const showEditForm = function(comment) {
   editCommentId.value = comment.id
   editedContent.value = comment.content
   showEditModal.value = true
+  console.log('clicked', showEditModal.value)
+  console.log(editCommentId.value, editedContent.value)
 }
 
 
