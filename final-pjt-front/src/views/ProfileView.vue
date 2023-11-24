@@ -25,7 +25,11 @@
         <input v-model="userData.salary" placeholder="-" id="salary" class="input" />
       </div> 
       <button @click="submitChanges">회원 정보 수정</button>
-      <button class="password-pop" @click="openPasswordChangePopup">비밀번호 변경</button>   
+      <button class="password-pop" @click="togglePopup">비밀번호 변경</button>   
+
+      <div v-if="popup">
+        <PasswordChangePopup/>
+      </div>
 
       <hr>
       <h2>내가 가입한 상품 목록</h2>
@@ -108,13 +112,12 @@ import { Bar } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
-const openPasswordChangePopup = () => {
-  // 팝업 창을 여는 로직을 추가
-  window.open('/password-change-popup', '_blank', 'width=400,height=400');
-}
 
 const authStore = useAuthStore()
 const userData = authStore.userData
+
+
+// 회원정보 수정
 const submitChanges = async () => {
   try {
     await axios({
@@ -131,13 +134,19 @@ const submitChanges = async () => {
       }
     })
     window.alert('정보 수정이 완료 되었습니다.')
-    // Optionally, you may want to update the user data in the store or take other actions upon successful submission.
   }
     catch (error) {
     console.error('Error updating profile:', error);
-    // Handle error appropriately
   }
 }
+
+
+// 비밀번호 변경 숨기기/띄우기
+const togglePopup = function() {
+  popup.value = !popup.value
+}
+const popup = ref(false)
+
 
 // 좋아요 예금 상품 가져오기
 const likedProducts = ref([])
@@ -191,7 +200,7 @@ const toggleChart = () => {
   console.log('options', chartOptions)
 }
 
-// Watch for changes in showChart and fetch data when it becomes true
+
 watch(showChart, (newVal) => {
   if (newVal) {
     updateChartData()
