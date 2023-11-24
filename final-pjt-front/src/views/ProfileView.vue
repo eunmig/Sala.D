@@ -130,6 +130,7 @@ const submitChanges = async () => {
         salary: userData.salary || null,
       }
     })
+    window.alert('정보 수정이 완료 되었습니다.')
     // Optionally, you may want to update the user data in the store or take other actions upon successful submission.
   }
     catch (error) {

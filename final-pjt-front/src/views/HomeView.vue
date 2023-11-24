@@ -1,5 +1,5 @@
 <template>
-<div class="video-container" v-if="showVideo && isAuthenticated">
+<div class="video-container" v-if="showVideo && isAuthenticated && count==0">
   <button @click="toggleVideo">skip</button>
   <video ref="myVideo" width="320" height="240" autoplay muted @ended="onVideoEnded">
     <source :src="videoSource" type="video/mp4">
@@ -109,21 +109,29 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
 import { useAuthStore } from '../stores/auth'
+import { useVideoStore } from '../stores/video'
 
 const authStore = useAuthStore()
 const isAuthenticated = authStore.isAuthenticated
+const videoStore = useVideoStore()
 
 const showVideo = ref(true)
 const toggleVideo = () => {
   showVideo.value = false
 }
 const videoSource = computed(() => '/src/assets/video/intro.mp4')
-const count = ref(0)
+
+const count = ref(videoStore.count)
 const onVideoEnded = () => {
-  showVideo.value = false
-  count.value = 1
+  showVideo.value = false;
+  videoStore.onVideoEnded()
 }
 
+onMounted(() => {
+
+  console.log(authStore.isAuthenticated)
+  console.log(videoStore.count)
+})
 
 </script>
 
