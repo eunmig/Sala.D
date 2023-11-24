@@ -24,15 +24,9 @@
         <label for="salary">연봉: </label>
         <input v-model="userData.salary" placeholder="-" id="salary" class="input" />
       </div> 
-      <button @click="submitChanges">회원 정보만 수정</button>
-      
+      <button @click="submitChanges">회원 정보 수정</button>
       <button class="password-pop" @click="openPasswordChangePopup">비밀번호 변경</button>   
-      <hr>
-      <br>
-      <h2>추천 차량 목록</h2>
-      <RouterLink class="button" :to="{ name : 'Car' }" >
-      추천 차량 보러가기
-      </RouterLink> 
+
       <hr>
       <h2>내가 가입한 상품 목록</h2>
       <div>
@@ -97,6 +91,11 @@
           <hr>
         </div>
     </div>
+
+    <RouterLink class="button" :to="{ name : 'Car' }" >
+      추천 차량 보러가기
+      </RouterLink> 
+
   </div>
 </template>
 

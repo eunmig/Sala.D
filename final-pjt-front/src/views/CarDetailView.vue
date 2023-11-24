@@ -39,7 +39,7 @@
       </table>
       <hr>
       <h2>추천 적금</h2>
-      <div>
+      <div class="input-box">
         <label for="monthlyInvestment">고정 적금 금액: </label>
         <input v-model="monthlyInvestment" type="number" id="monthlyInvestment" />
       </div>
