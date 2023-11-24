@@ -50,6 +50,8 @@
 <script setup>
 import { onMounted,ref } from 'vue'
 
+// const apiKey = process.env.VUE_APP_KAKAO_API_KEY
+// console.log('API Key:', apiKey)
 
 // -------------------
 const list_city = ref([])
@@ -92,7 +94,7 @@ const loadScript =function() {
   const script = document.createElement('script')
   const subscr =document.createElement('script')      
   // 동적 로딩을 위해서 autoload=false 추가
-  script.src = `https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=6ea6f2ddaa643d87dd39ce1bf304f859&libraries=services,clusterer,drawing`
+  script.src = `https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${import.meta.env.VITE_APP_KAKAO_API_KEY}&libraries=services,clusterer,drawing`
   // kakaomap script loading 후 initMap 실행
   script.addEventListener('load', () => kakao.maps.load(initMap))
   document.head.appendChild(script)

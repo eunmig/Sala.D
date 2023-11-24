@@ -9,19 +9,21 @@
     
     <div v-if="post">
       <div class="post-meta">
-        <p class="category">{{ post.category.name }}</p>
-        
-        <h3>{{ post.title }}</h3>
-        <p style="text-align: right">작성자: {{ post.user_data.username }}</p>
-
-        <hr>
-        <p class="post-content">{{ post.content }}</p>
-        <hr>
-        <div style="text-align: right">
-        <p class="date">작성일: {{ formatDate(post.created_at) }}</p>
-        <p class="date">수정일: {{ formatDate(post.updated_at) }}</p>
+        <div style="display: flex; justify-content: center; column-gap: 10px;">
+          <div style="flex: 1; text-align: left;">
+            <p class="category">{{ post.category.name }}</p>
+            <h3>{{ post.title }}</h3>
+          </div>
+          <div style="flex: 1; text-align: right;">
+            <p class="date" style="text-align: right">작성일: {{ formatDate(post.created_at) }}</p>
+            <p class="date" style="text-align: right">수정일: {{ formatDate(post.updated_at) }}</p>
+            <p style="text-align: right">작성자: {{ post.user_data.username }}</p>
+          </div>
         </div>
-
+        <hr>
+        <div class="post-content">
+          <p>{{ post.content }}</p>
+        </div>
       </div>
 
       <div v-if="post.user === userData.id" class="post-actions">
