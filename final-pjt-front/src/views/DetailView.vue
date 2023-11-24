@@ -9,14 +9,19 @@
     
     <div v-if="post">
       <div class="post-meta">
-        <p class="category">카테고리 : {{ post.category.name }}</p>
-        <p class="post-id">No. : {{ post.id }}번 글</p>
-        <h3>Title : {{ post.title }}</h3>
-        <hr>
-        <p class="date">작성일: {{ post.created_at }}</p>
-        <p class="date">최종 수정일: {{ post.updated_at }}</p>
+        <p class="category">{{ post.category.name }}</p>
+        
+        <h3>{{ post.title }}</h3>
+        <p style="text-align: right">작성자: {{ post.user_data.username }}</p>
+
         <hr>
         <p class="post-content">{{ post.content }}</p>
+        <hr>
+        <div style="text-align: right">
+        <p class="date">작성일: {{ formatDate(post.created_at) }}</p>
+        <p class="date">수정일: {{ formatDate(post.updated_at) }}</p>
+        </div>
+
       </div>
 
       <div v-if="post.user === userData.id" class="post-actions">
@@ -185,6 +190,18 @@ onMounted(() => {
   })
   .catch(err => console.log(err))
 })
+
+const formatDate = (value) => {
+  if (!value) return ""
+  // Format the date to show only up to the minute
+  return new Date(value).toLocaleString("kr", {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+  })
+}
 </script>
 
 <style scoped>

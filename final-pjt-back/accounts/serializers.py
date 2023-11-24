@@ -33,6 +33,11 @@ class UserDataSerializer(serializers.ModelSerializer):
         model = User
         fields =  '__all__'
 
+class UserPostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('username',)
+
 class CarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Car
