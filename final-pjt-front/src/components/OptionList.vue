@@ -19,13 +19,14 @@
     </table>
   </div>
 </template>  
-  <script setup>
 
-  const props = defineProps(['options']);
-  </script>
+<script setup>
+
+const props = defineProps(['options']);
+</script>
   
-  <style>
-  @import "@/components/OptionList.scss"
+<style>
+@import "@/components/OptionList.scss"
 
-  </style>
+</style>
   

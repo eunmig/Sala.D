@@ -95,14 +95,7 @@
           </table>
   
           <hr>
-          </div>
-
-  
-      <hr>
-
-
-
-
+        </div>
     </div>
   </div>
 </template>
